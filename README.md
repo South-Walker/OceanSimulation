@@ -2,7 +2,7 @@
 ## 简介
 开坑海洋模拟，基于Unity利用多种模型（正弦波、Gerstner波、海洋统计学模型）在GPU与CPU上实现对海洋表面的模拟
 ## 正弦波叠加  
->* 正弦波是非常简单的基于高度场的模型，只会影响水面竖直方向，单个正弦波可以描述成如下形式：<br>
+正弦波是非常简单的基于高度场的模型，只会影响水面竖直方向，单个正弦波可以描述成如下形式：<br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/SinesW.gif" alt="show" />
 在时刻t下，顶点具体的高度等于所有正弦波的累加：<br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/SinesH.gif" alt="show" />
@@ -20,7 +20,8 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 其中Q是表示波峰陡度的参数，取0时等同于正弦波，最大取频率与振幅乘积的倒数，此时波峰最陡。<br>
 计算法线，可得：<br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/GerstnerN.gif" alt="show" /><br>
-采用4个正弦波实现的效果如下图:<br>
-
-
+采用4个Gerstner波实现的效果如下图:<br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Gif/Gerstner.gif" alt="show" />
+>* 项目中是通过切线与半切线的叉积得到的法线
+可以观察到其较正弦波模型有更陡峭的波峰与波谷。
 ###
