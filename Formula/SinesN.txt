@@ -1,0 +1,1 @@
+N(x,y)=\left(\frac{\partial{P}}{\partial{x}}\right)\times\left(\frac{\partial{P}}{\partial{y}}\right)

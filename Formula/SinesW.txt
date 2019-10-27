@@ -1,0 +1,1 @@
+W_i(x,y,t)=A_iSin[\vec{D_i}\cdot(x,y)\omega_i+\phi_it]
