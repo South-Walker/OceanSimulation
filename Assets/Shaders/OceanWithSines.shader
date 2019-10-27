@@ -60,8 +60,8 @@
 					wa = _Frequency[i] * _Steepness[i];
 					sint *= wa;
 					cost *= wa;
-					v.normal.x += -D.x * cost;
-					v.normal.z += -D.y * cost;
+					v.normal.x += -_Dx[i] * cost;
+					v.normal.z += -_Dy[i] * cost;
 				}
 
 				v.normal.y += 1;

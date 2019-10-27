@@ -235,7 +235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b3284768a214084e8c13e4f22c0df04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  c: {fileID: 171448169}
   m: {fileID: 2100000, guid: 378a969477bd88a49a758f1cfbdf823b, type: 2}
   stdFrequency: 0.71
   stdSpeed: 1

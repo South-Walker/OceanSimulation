@@ -33,13 +33,14 @@ public class OceanWithGerstner : MonoBehaviour
         var s = Random.state;
 
         bool ischange = false;
-        if (ShaderWave.stdFrequency != stdFrequency ||
+        if (ShaderWave.stdFrequency != stdFrequency || ShaderWave.stdQ != stdQ ||
             ShaderWave.stdSpeed != stdSpeed || ShaderWave.stdSteepness != stdSteepness)
         {
             ischange = true;
             ShaderWave.stdFrequency = stdFrequency;
             ShaderWave.stdSpeed = stdSpeed;
             ShaderWave.stdSteepness = stdSteepness;
+            ShaderWave.stdQ = stdQ;
         }
         if (ischange)
         {

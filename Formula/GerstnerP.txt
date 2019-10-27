@@ -1,1 +1,1 @@
-P(x,y,t)=\begin{bmatrix}x+{\sum}Q_iA_i\vec{D_i}.xCos[\omega_i\vec{D_i}\cdot(x,y)+\phi_it]\\y+{\sum}Q_iA_i\vec{D_i}.yCos[\omega_i\vec{D_i}\cdot(x,y)+\phi_it]\\\sum A_iSin[\vec{D_i}\cdot(x,y)\omega_i+\phi_it]\end{bmatrix}
+P(x,y,t)=\begin{bmatrix}x+{\sum}Q_iA_i\vec{D_i}.xCos[\vec{D_i}\cdot(x,y)\omega_i+\phi_it]\\y+{\sum}Q_iA_i\vec{D_i}.yCos[\vec{D_i}\cdot(x,y)\omega_i+\phi_it]\\\sum A_iSin[\vec{D_i}\cdot(x,y)\omega_i+\phi_it]\end{bmatrix}

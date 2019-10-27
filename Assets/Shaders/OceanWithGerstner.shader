@@ -20,7 +20,7 @@
 			fixed4 _Diffuse;
 			fixed4 _Specular;
 			float _Gloss;
-
+			float _Q[4];
 			float _Dx[4];
 			float _Dy[4];
 			//steepness=A
@@ -42,30 +42,37 @@
 				float3 worldPos : TEXCOORD2;
 			};
 			float4 D;
+			float3 B, T;
 			float temp;
 			float sint, cost, wa;
 			float agree;
 			v2f vert(a2v v)
 			{
 				v2f o;
+				B = float3(1, 0, 0);
+				T = float3(0, 0, 1);
 				for (int i = 0; i < 4; i++)
 				{
 					D = float4(_Dx[i], 0, _Dy[i], 1.0);
-
 					agree = _Frequency[i] * dot(D, v.vertex) + _Speed[i] * _Time.y;
-					sint = sin(agree);
-					cost = cos(agree);
-					v.vertex.y += _Steepness[i] * sint;
+					sint = _Steepness[i] * sin(agree);
+					cost = _Steepness[i] * cos(agree);
+					v.vertex.x += _Q[i] * _Dx[i] * cost;
+					v.vertex.y += sint;
+					v.vertex.z += _Q[i] * _Dy[i] * cost;
 
-					wa = _Frequency[i] * _Steepness[i];
-					sint *= wa;
-					cost *= wa;
-					v.normal.x += -D.x * cost;
-					v.normal.z += -D.y * cost;
+					sint *= _Frequency[i];
+					cost *= _Frequency[i];
+
+					B.x += -_Q[i] * _Dx[i] * _Dx[i] * sint;
+					B.y += _Dx[i] * cost;
+					B.z += -_Q[i] * _Dx[i] * _Dy[i] * sint;
+
+					T.x += -_Q[i] * _Dx[i] * _Dy[i] * sint;
+					T.y += _Dy[i] * cost;
+					T.z += -_Q[i] * _Dy[i] * _Dy[i] * sint;
 				}
-
-				v.normal.y += 1;
-
+				v.normal.xyz = cross(T, B);
 				o.pos = UnityObjectToClipPos(v.vertex);
 
 				o.worldNormal = mul(v.normal, (float3x3)unity_WorldToObject);
