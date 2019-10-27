@@ -28,5 +28,5 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 ## 海洋统计学模型
 
 ## 引用
-[1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html)
+[1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
 [2] [Ocean simulation part one: using the discrete Fourier transform](https://www.keithlantz.net/2011/10/ocean-simulation-part-one-using-the-discrete-fourier-transform/)
