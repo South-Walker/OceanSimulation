@@ -1,0 +1,4 @@
+N(x,y)=\begin{bmatrix}-\sum\vec{D_i}.x\omega_iA_iCos[\vec{D_i}\cdot(x,y)\omega_i+\phi_it]
+\\-\sum\vec{D_i}.y\omega_iA_iCos[\vec{D_i}\cdot(x,y)\omega_i+\phi_it]
+\\ 1-\sum Q_i\omega_iA_iSin[\vec{D_i}\cdot(x,y)\omega_i+\phi_it]
+\end{bmatrix}
