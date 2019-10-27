@@ -169,9 +169,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.01
+  far clip plane: 250
+  field of view: 25.256552
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -196,13 +196,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171448169}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.2464856, y: -0, z: -0, w: 0.9691465}
+  m_LocalPosition: {x: 0, y: 39.6, z: -83.8}
+  m_LocalScale: {x: 0.13342, y: 0.13342, z: 0.13342}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 28.539001, y: 0, z: 0}
 --- !u!1 &971798323
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,10 +237,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   c: {fileID: 171448169}
   m: {fileID: 2100000, guid: 378a969477bd88a49a758f1cfbdf823b, type: 2}
-  stdFrequency: 1
-  stdQ: 0.1
+  stdFrequency: 0.71
   stdSpeed: 1
-  stdSteepness: 0.2
+  stdSteepness: 0.9
 --- !u!64 &971798325
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -308,8 +307,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971798323}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2

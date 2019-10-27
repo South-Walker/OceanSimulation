@@ -34,7 +34,7 @@ public class ShaderWave
         frequency = stdFrequency / stdSteepness * steepness;
         speed = Random.Range(stdSpeed / 2, stdSpeed * 2);
         q = Random.Range(stdQ / 2, stdQ * 2);
-        agree = Random.Range(0, Mathf.PI * 2);
+        agree = Random.Range(0, Mathf.PI / 2);
         return new ShaderWave(steepness, frequency, agree, speed, q);
     }
     public ShaderWave(float steepness, float frequency, float agree, float speed, float q)
@@ -44,14 +44,12 @@ public class ShaderWave
         Dx = Mathf.Cos(agree);
         Dy = Mathf.Sin(agree);
         Speed = speed;
-        Q = q;
 
         Steepnesses.Add(Steepness);
         Frequencys.Add(Frequency);
         Dxs.Add(Dx);
         Dys.Add(Dy);
         Speeds.Add(speed);
-        Qs.Add(q);
     }
 }
 [RequireComponent(typeof(MeshRenderer))]
@@ -61,16 +59,12 @@ public class OceanWithSines : MonoBehaviour
     public Material m;
     const int sinCount = 4;
     public float stdFrequency;
-    public float stdQ;
     public float stdSpeed;
     public float stdSteepness;
     private void Awake()
     {
-        c.GetComponent<Camera>().depthTextureMode |= DepthTextureMode.DepthNormals;
-
         Random.InitState(96);
         ShaderWave.stdFrequency = stdFrequency;
-        ShaderWave.stdQ = stdQ;
         ShaderWave.stdSpeed = stdSpeed;
         ShaderWave.stdSteepness = stdSteepness;
         for (int i = 0; i < sinCount; i++)
@@ -90,12 +84,11 @@ public class OceanWithSines : MonoBehaviour
         var s = Random.state;
 
         bool ischange = false;
-        if (ShaderWave.stdFrequency != stdFrequency || ShaderWave.stdQ != stdQ ||
+        if (ShaderWave.stdFrequency != stdFrequency ||
             ShaderWave.stdSpeed != stdSpeed || ShaderWave.stdSteepness != stdSteepness)
         {
             ischange = true;
             ShaderWave.stdFrequency = stdFrequency;
-            ShaderWave.stdQ = stdQ;
             ShaderWave.stdSpeed = stdSpeed;
             ShaderWave.stdSteepness = stdSteepness;
         }
@@ -112,7 +105,6 @@ public class OceanWithSines : MonoBehaviour
 
         m.SetFloatArray("_Dx", ShaderWave.Dxs);
         m.SetFloatArray("_Dy", ShaderWave.Dys);
-        m.SetFloatArray("_Q", ShaderWave.Qs);
         m.SetFloatArray("_Steepness", ShaderWave.Steepnesses);
         m.SetFloatArray("_Frequency", ShaderWave.Frequencys);
         m.SetFloatArray("_Speed", ShaderWave.Speeds);

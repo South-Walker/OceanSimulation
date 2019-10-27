@@ -6,7 +6,6 @@
 	}
 	SubShader
 	{
-		Cull Off ZWrite Off
 		Tags { "RenderType" = "Opaque" }
 		Pass
 		{
@@ -25,7 +24,6 @@
 			//Frequency=W
 			float _Frequency[4];
 			float _Speed[4];
-			float _Q[4];
 			float _SubColors[3];
 			struct a2v
 			{
@@ -54,27 +52,19 @@
 					sint = sin(agree);
 					cost = cos(agree);
 					v.vertex.y += _Steepness[i] * sint;
-					temp = _Q[i] * _Steepness[i] * cost;
-					v.vertex.x += D.x * temp;
-					v.vertex.z += D.z * temp;
 
 					wa = _Frequency[i] * _Steepness[i];
 					sint *= wa;
 					cost *= wa;
 					v.normal.x += -D.x * cost;
-					v.normal.y += -_Q[i] * sint;
 					v.normal.z += -D.y * cost;
-
-					v.tangent.x += -_Q[i] * D.x * cost;
-					v.tangent.y += D.z * cost;
-					v.tangent.z += -_Q[i] * D.y * D.y * sint;
 				}
-				v.normal.y += 1;
-				v.tangent.y += 1;
 
+				v.normal.y += 1;
+				
 				o.pos = UnityObjectToClipPos(v.vertex);
 
-				o.worldNormal = mul(v.normal, (float3x3)unity_WorldToObject);
+				o.worldNormal = mul(normalize(v.normal), (float3x3)unity_WorldToObject);
 				return o;
 			}
 			//光照模型用的halfLambert
@@ -89,7 +79,6 @@
 				fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * halfLambert;
 
 				fixed3 color = ambient + diffuse;
-
 				return fixed4(color, 1.0);
 		}
 		ENDCG
