@@ -22,11 +22,17 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/GerstnerN.gif" alt="show" /><br>
 采用4个Gerstner波实现的效果如下图:<br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Gif/Gerstner.gif" alt="show" /><br>
-可以观察到其较正弦波模型有更陡峭的波峰与更宽广的波谷。
 >* 项目中是通过切线与半切线的叉积得到的法线<br>
-
+##
+可以观察到其较正弦波模型有更陡峭的波峰与更宽广的波谷。
 ## 海洋统计学模型
+有学者根据大量海洋浮标的实际运动，在高度场上建立了更加贴合现实且具有良好数学特性的海洋表面模型：
+
+
+>* 项目中是利用频率域上平移的相关性质将坐标轴移动到中心，而非如引用<sup>[2]</sup>中进行了变量代换<br>
+
 
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
-[2] [Ocean simulation part one: using the discrete Fourier transform](https://www.keithlantz.net/2011/10/ocean-simulation-part-one-using-the-discrete-fourier-transform/)
+[2] [Ocean simulation part one: using the discrete Fourier transform](https://www.keithlantz.net/2011/10/ocean-simulation-part-one-using-the-discrete-fourier-transform/) <br>
+[3] Tessendorf, Jerry. Simulating Ocean Water. In SIGGRAPH 2002 Course Notes #9 (Simulating Nature: Realistic and Interactive Techniques), ACM Press. 
