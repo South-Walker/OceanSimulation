@@ -65,11 +65,14 @@
     <Compile Include="Assets\Others\fft.cs" />
     <Compile Include="Assets\Others\mysea.cs" />
     <Compile Include="Assets\Others\usedft.cs" />
+    <Compile Include="Assets\Script\OceanWithGerstner.cs" />
     <Compile Include="Assets\Script\OceanWithSines.cs" />
+    <Compile Include="Assets\Script\ShaderWave.cs" />
     <None Include="Assets\Others\BumpedSpecular.shader" />
     <None Include="Assets\Shaders\OceanWithSines.shader" />
     <None Include="Assets\Others\s.shader" />
     <None Include="Assets\Others\meshColorOnly.shader" />
+    <None Include="Assets\Shaders\OceanWithGerstner.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/lenovo/Desktop/OceanSimulation/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

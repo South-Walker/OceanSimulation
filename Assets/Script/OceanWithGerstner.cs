@@ -1,22 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Script;
 using UnityEngine;
-using Assets.Script;
 
-[RequireComponent(typeof(MeshRenderer))]
-public class OceanWithSines : MonoBehaviour
+public class OceanWithGerstner : MonoBehaviour
 {
     public Material m;
     const int sinCount = 4;
     public float stdFrequency;
     public float stdSpeed;
     public float stdSteepness;
+    public float stdQ;
     private void Awake()
     {
         Random.InitState(96);
         ShaderWave.stdFrequency = stdFrequency;
         ShaderWave.stdSpeed = stdSpeed;
         ShaderWave.stdSteepness = stdSteepness;
+        ShaderWave.stdQ = stdQ;
         for (int i = 0; i < sinCount; i++)
         {
             ShaderWave.RandomWave();
@@ -58,5 +57,6 @@ public class OceanWithSines : MonoBehaviour
         m.SetFloatArray("_Steepness", ShaderWave.Steepnesses);
         m.SetFloatArray("_Frequency", ShaderWave.Frequencys);
         m.SetFloatArray("_Speed", ShaderWave.Speeds);
+        m.SetFloatArray("_Q", ShaderWave.Qs);
     }
 }

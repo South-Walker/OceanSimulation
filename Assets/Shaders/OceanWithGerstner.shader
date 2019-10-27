@@ -1,4 +1,4 @@
-﻿Shader "Hidden/OceanWithSines"
+﻿Shader "Hidden/OceanWithGerstner"
 {
 	Properties
 	{
@@ -6,7 +6,7 @@
 		_Specular("Specular", Color) = (1, 1, 1, 1)
 		_Gloss("Gloss", Range(8.0, 256)) = 20
 	}
-	SubShader
+		SubShader
 	{
 		Tags { "RenderType" = "Opaque" }
 		Pass
