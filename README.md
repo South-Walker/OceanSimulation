@@ -11,7 +11,7 @@
 其中P为对应顶点的位置，表示为：<br>
 <img src="http://chart.googleapis.com/chart?cht=tx&chl=P(x,y)=(x,y,H(x,y)))">
 至此便得到了所需的所有关系，采用4个正弦波实现的效果如下图：
-
+![image](https://github.com/South-Walker/OceanSimulation/blob/master/Gif/Sines.gif)
 正弦波叠加适合模拟较为平静的水面，若想获得更为陡峭的波峰可以使用Gerstner波
 
 ## Gerstner波
