@@ -17,7 +17,10 @@
 ## Gerstner波
 Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻t下，顶点的位置函数为：<br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/GerstnerP.gif" alt="show" />
-其中Q是表示波峰陡度的参数，取0时等同于正弦波，最大取频率与振幅乘积的倒数，此时波峰最陡，对于法线，
+其中Q是表示波峰陡度的参数，取0时等同于正弦波，最大取频率与振幅乘积的倒数，此时波峰最陡。<br>
+计算法线，可得：<br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/GerstnerN.gif" alt="show" />
+采用4个正弦波实现的效果如下图:<br>
 
 
 ###
