@@ -12,7 +12,7 @@
 <img src="http://chart.googleapis.com/chart?cht=tx&chl=P(x,y)=(x,y,H(x,y)))">
 至此便得到了所需的所有关系，采用4个正弦波实现的效果如下图：
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Gif/Sines.gif" alt="show" />
-正弦波叠加适合模拟较为平静的水面，若想获得更为陡峭的波峰可以使用Gerstner波。
+正弦波叠加适合模拟较为平静的水面，当我们想获得更陡峭的波峰与更宽广的波谷时，两个明显的思路分别是修改高度场函数与水平移动顶点，让其波峰陡峭处顶点更加密集
 
 ## Gerstner波
 
