@@ -65,6 +65,7 @@
     <Compile Include="Assets\Others\fft.cs" />
     <Compile Include="Assets\Others\mysea.cs" />
     <Compile Include="Assets\Others\usedft.cs" />
+    <Compile Include="Assets\Script\OceanWithDFT.cs" />
     <Compile Include="Assets\Script\OceanWithGerstner.cs" />
     <Compile Include="Assets\Script\OceanWithSines.cs" />
     <Compile Include="Assets\Script\ShaderWave.cs" />
