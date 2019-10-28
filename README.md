@@ -30,7 +30,8 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 
 
 >* 项目中是利用频率域上平移的相关性质将坐标轴移动到中心，而非如引用<sup>[2]</sup>中进行了变量代换<br>
-
+## todo
+>* 傅里叶反演写成傅里叶变换了
 
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
