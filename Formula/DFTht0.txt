@@ -1,0 +1,1 @@
+\tilde{h_0}(\vec{k})=\frac{\varepsilon_r+i\varepsilon_i}{\sqrt{2}}\sqrt{P_h(\left | \vec{k} \right |)}

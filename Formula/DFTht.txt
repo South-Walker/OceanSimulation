@@ -1,0 +1,1 @@
+\tilde{h}(\vec{k},t)=\tilde{h_0}(\vec{k})exp[i\omega(\left | \vec{k} \right |)t]+\tilde{h_0^*}(\vec{k})exp[-i\omega(\left | \vec{k} \right |)t]

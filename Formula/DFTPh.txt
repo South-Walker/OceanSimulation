@@ -1,0 +1,1 @@
+P_h(\vec{k})=A\frac{exp[\frac{-1}{(\left | k \right |L)^2}]}{\left | k \right |^4}(\vec{k}\cdot\vec{w})
