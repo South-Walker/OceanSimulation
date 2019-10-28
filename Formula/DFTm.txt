@@ -1,0 +1,1 @@
+\frac{-L_y}{2}\leqslant m< \frac{L_y}{2}

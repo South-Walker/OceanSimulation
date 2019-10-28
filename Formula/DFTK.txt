@@ -1,0 +1,1 @@
+\vec{k}=(\frac{2\pi n}{L_x},\frac{2\pi m}{L_y})
