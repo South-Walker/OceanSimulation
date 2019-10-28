@@ -1,0 +1,4 @@
+N(x,y)=\begin{bmatrix}-\sum_{\vec{k}}^{ }i\vec{k}.x\tilde{h}(\vec{k},t)exp(i\vec{k}\cdot\vec{p})
+\\-\sum_{\vec{k}}^{ }i\vec{k}.y\tilde{h}(\vec{k},t)exp(i\vec{k}\cdot\vec{p})
+\\ 1
+\end{bmatrix}
