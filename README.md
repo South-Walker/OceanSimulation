@@ -42,11 +42,11 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 >* <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/L.gif" alt="show" /> 满足等式 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTL.gif" alt="show" /> 表示风速 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/V.gif" alt="show" /> 对波峰高度的限制。
 
 
-原理上通过上述等式已经可以基于高度场描述海洋曲面了，但为了获得更陡峭的波峰与更宽广的波谷，可以借鉴Gerstner波模型的思路，加入顶点在水平面方向的位移,在这里用向量 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/VecD.gif" alt="show" /> 表示，具体计算方法如下：<br><br>
+原理上通过上述等式已经可以基于高度场描述海洋曲面了，但为了获得更陡峭的波峰与更宽广的波谷，可以借鉴Gerstner波模型的思路，加入顶点在水平面上的位移,在这里用向量 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/VecD.gif" alt="show" /> 表示，具体计算方法如下：<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTD.gif" alt="show" /><br><br>
 出于方便渲染考虑，往往还需要计算出对应顶点的法线<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTNor.gif" alt="show" /><br><br>
-基于上述公式直接暴力求解DFT得到的结果如下:<br><br>
+基于上述公式直接暴力求解计算量过大，然而观察到高度场函数与水平面上的位移函数都满足离散傅里叶变换的基本形式，故可以考虑使用快速傅里叶变换算法来优化。
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Gif/temp.gif" alt="show" /><br><br>
 
 >* 项目中是利用频率域上平移的相关性质将坐标轴移动到中心，而非如引用<sup>[2]</sup>中进行了变量代换<br>
