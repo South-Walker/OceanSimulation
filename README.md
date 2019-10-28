@@ -36,9 +36,10 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 显然该式在形式上类似于一个傅里叶反演，对应的频率域函数表示如下：<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTht.gif" alt="show" /><br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTht0.gif" alt="show" /><br><br>
->* <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0x.gif" alt="show" /> 是 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0.gif" alt="show" /> 的共轭复数
-##
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTPh.gif" alt="show" /><br><br>
+>*  <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0x.gif" alt="show" /> 是 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0.gif" alt="show" /> 的共轭复数
+>*  <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/A.gif" alt="show" /> 表示波峰高度 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/VecW.gif" alt="show" /> 表示风向
+>* <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/L.gif" alt="show" /> 满足等式 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTL.gif" alt="show" /> 表示风速 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/V.gif" alt="show" /> 对波峰高度的限制。
 
 >* 项目中是利用频率域上平移的相关性质将坐标轴移动到中心，而非如引用<sup>[2]</sup>中进行了变量代换<br>
 ## todo
