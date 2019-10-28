@@ -1,0 +1,1 @@
+\vec{D}(\vec{p})=\sum_{\vec{k}}^{ }-i\frac{\vec{k}}{\left | k \right |}\tilde{h}(\vec{k},t)exp(i\vec{k}\cdot\vec{x})
