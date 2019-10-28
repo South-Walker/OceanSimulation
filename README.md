@@ -22,7 +22,7 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/GerstnerN.gif" alt="show" /><br><br>
 采用4个Gerstner波实现的效果如下图:<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Gif/Gerstner.gif" alt="show" /><br><br>
->* 项目中是通过切线与半切线的叉积得到的法线<br>
+* 项目中是通过切线与半切线的叉积得到的法线<br>
 ##
 可以观察到其较正弦波模型有更陡峭的波峰与更宽广的波谷。
 ## 海洋统计学模型
@@ -37,9 +37,9 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTht.gif" alt="show" /><br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTht0.gif" alt="show" /><br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTPh.gif" alt="show" /><br><br>
->*  <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0x.gif" alt="show" /> 是 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0.gif" alt="show" /> 的共轭复数
->*  <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/A.gif" alt="show" /> 表示波峰高度 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/VecW.gif" alt="show" /> ,表示风向
->* <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/L.gif" alt="show" /> 满足等式 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTL.gif" alt="show" /> 表示风速 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/V.gif" alt="show" /> 对波峰高度的限制。
+* <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0x.gif" alt="show" /> 是 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0.gif" alt="show" /> 的共轭复数
+* <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/A.gif" alt="show" /> 表示波峰高度 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/VecW.gif" alt="show" /> ,表示风向
+* <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/L.gif" alt="show" /> 满足等式 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTL.gif" alt="show" /> 表示风速 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/V.gif" alt="show" /> 对波峰高度的限制。
 
 
 原理上通过上述等式已经可以基于高度场描述海洋曲面了，但为了获得更陡峭的波峰与更宽广的波谷，可以借鉴Gerstner波模型的思路，加入顶点在水平面上的位移,在这里用向量 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/VecD.gif" alt="show" /> 表示，具体计算方法如下：<br><br>
@@ -49,9 +49,9 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 基于上述公式直接暴力求解计算量过大，然而观察到高度场函数与水平面上的位移函数都满足离散傅里叶变换的基本形式，故可以考虑使用快速傅里叶变换算法来优化。
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Gif/temp.gif" alt="show" /><br><br>
 
->* 项目中是利用频率域上平移的相关性质将坐标轴移动到中心，而非如引用<sup>[2]</sup>中进行了变量代换<br>
+* 项目中是利用频率域上平移的相关性质将坐标轴移动到中心，而非如引用<sup>[2]</sup>中进行了变量代换<br>
 ## todo
->* 傅里叶反演写成傅里叶变换了
+* 傅里叶反演写成傅里叶变换了
 
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
