@@ -28,7 +28,7 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 ## 海洋统计学模型
 有学者根据大量海洋浮标的实际运动，在高度场上建立了更加贴合现实且具有良好数学特性的海洋表面模型：<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTH.gif" alt="show" /><br><br>
-其中输入参数为顶点水平面坐标，方便起见写成了向量形式，向量k具体取值如下：<br>
+其中输入参数为顶点水平面坐标，方便起见写成了向量形式，向量k具体取值如下：<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTK.gif" alt="show" /><br><br>
 其中，n与m满足如下关系：<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTn.gif" alt="show" /><br><br>
