@@ -26,11 +26,23 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 ##
 可以观察到其较正弦波模型有更陡峭的波峰与更宽广的波谷。
 ## 海洋统计学模型
-有学者根据大量海洋浮标的实际运动，在高度场上建立了更加贴合现实且具有良好数学特性的海洋表面模型：
-
+有学者根据大量海洋浮标的实际运动，在高度场上建立了更加贴合现实且具有良好数学特性的海洋表面模型：<br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTH.gif" alt="show" /><br>
+其中输入参数为顶点水平面坐标，方便起见写成了向量形式，向量k具体取值如下：<br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTK.gif" alt="show" /><br>
+其中，n与m满足如下关系：<br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTn.gif" alt="show" /><br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTm.gif" alt="show" /><br>
+显然该式在形式上类似于一个傅里叶反演，对应的频率域函数表示如下：<br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTht.gif" alt="show" /><br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTht0.gif" alt="show" /><br>
+>* <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0x.gif" alt="show" />是<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0.gif" alt="show" />的共轭复数
+##
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTPh.gif" alt="show" /><br>
 
 >* 项目中是利用频率域上平移的相关性质将坐标轴移动到中心，而非如引用<sup>[2]</sup>中进行了变量代换<br>
-
+## todo
+>* 傅里叶反演写成傅里叶变换了
 
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
