@@ -26,7 +26,7 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 ##
 可以观察到其较正弦波模型有更陡峭的波峰与更宽广的波谷。
 ## 海洋统计学模型
-有学者根据大量海洋浮标的实际运动，在高度场上建立了更加贴合现实且具有良好数学特性的海洋表面模型：<br><br>
+有学者根据大量海洋浮标的实际运动，在高度场上建立了更加贴合现实且具有良好数学特性的海洋表面模型,在时刻t下某坐标对应的水面高度如下：<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTH.gif" alt="show" /><br><br>
 其中输入参数为顶点水平面坐标，方便起见写成了向量形式，向量k具体取值如下：<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTK.gif" alt="show" /><br><br>
@@ -44,7 +44,10 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 
 原理上通过上述等式已经可以基于高度场描述海洋曲面了，但为了获得更陡峭的波峰与更宽广的波谷，可以借鉴Gerstner波模型的思路，加入顶点在水平面方向的位移,在这里用向量 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/VecD.gif" alt="show" /> 表示，具体计算方法如下：<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTD.gif" alt="show" /><br><br>
-
+出于方便渲染考虑，往往还需要计算出对应顶点的法线<br><br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTNor.gif" alt="show" /><br><br>
+基于上述公式直接暴力求解DFT得到的结果如下:<br><br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Gif/temp.gif" alt="show" /><br><br>
 
 >* 项目中是利用频率域上平移的相关性质将坐标轴移动到中心，而非如引用<sup>[2]</sup>中进行了变量代换<br>
 ## todo
