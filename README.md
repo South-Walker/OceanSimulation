@@ -48,11 +48,7 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 出于方便渲染考虑，往往还需要计算出对应顶点的法线<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTNor.gif" alt="show" /><br><br>
 基于上述公式直接暴力求解计算量过大，然而观察到高度场函数与水平面上的位移函数都满足离散傅里叶变换的基本形式，故可以考虑使用快速傅里叶变换算法来优化。
-<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Gif/temp.gif" alt="show" /><br><br>
 
-* 项目中是利用频率域上平移的相关性质将坐标轴移动到中心，而非如引用<sup>[2]</sup>中进行了变量代换<br>
-## todo
-* 傅里叶反演写成傅里叶变换了
 
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
