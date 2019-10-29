@@ -38,7 +38,7 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 ![](/Formula/DFTw.gif)<br><br>
 ![](/Formula/DFTht0.gif)<br><br>
 ![](/Formula/DFTPh.gif)<br><br>
-* ![](/Formula/tildeh0x.gif)<br><br> 是 ![](/Formula/tildeh0.gif) 的共轭复数
+* ![](/Formula/tildeh0x.gif) 是 ![](/Formula/tildeh0.gif) 的共轭复数
 * ![](/Formula/A.gif) 表示波峰高度 ![](/Formula/VecW.gif) ,表示风向
 * ![](/Formula/L.gif) 满足等式 ![](/Formula/DFTL.gif) 表示风速 ![](/Formula/V.gif) 对波峰高度的限制。
 
