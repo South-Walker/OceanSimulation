@@ -78,7 +78,7 @@ Shader "Unity Shaders Book/Common/Bumped Specular" {
 				fixed3 lightDir = normalize(UnityWorldSpaceLightDir(worldPos));
 				fixed3 viewDir = normalize(UnityWorldSpaceViewDir(worldPos));
 				
-				fixed3 bump = UnpackNormal(tex2D(_BumpMap, i.uv.zw));
+				fixed3 bump = fixed3(0, 0, 1);//UnpackNormal(tex2D(_BumpMap, i.uv.zw));
 				bump = normalize(half3(dot(i.TtoW0.xyz, bump), dot(i.TtoW1.xyz, bump), dot(i.TtoW2.xyz, bump)));
 
 				fixed3 albedo = tex2D(_MainTex, i.uv.xy).rgb * _Color.rgb;
@@ -166,7 +166,7 @@ Shader "Unity Shaders Book/Common/Bumped Specular" {
 				fixed3 lightDir = normalize(UnityWorldSpaceLightDir(worldPos));
 				fixed3 viewDir = normalize(UnityWorldSpaceViewDir(worldPos));
 				
-				fixed3 bump = UnpackNormal(tex2D(_BumpMap, i.uv.zw));
+				fixed3 bump = fixed3(0, 0, 1);//UnpackNormal(tex2D(_BumpMap, i.uv.zw));
 				bump = normalize(half3(dot(i.TtoW0.xyz, bump), dot(i.TtoW1.xyz, bump), dot(i.TtoW2.xyz, bump)));
 				
 				fixed3 albedo = tex2D(_MainTex, i.uv.xy).rgb * _Color.rgb;

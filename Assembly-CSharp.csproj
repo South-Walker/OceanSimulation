@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Others\DFT.cs" />
     <Compile Include="Assets\Others\fft.cs" />
     <Compile Include="Assets\Others\mysea.cs" />
     <Compile Include="Assets\Others\usedft.cs" />
@@ -69,6 +70,8 @@
     <Compile Include="Assets\Script\OceanWithGerstner.cs" />
     <Compile Include="Assets\Script\OceanWithSines.cs" />
     <Compile Include="Assets\Script\ShaderWave.cs" />
+    <Compile Include="Assets\Script\Statistical Parameters.cs" />
+    <None Include="Assets\Others\Chapter6-BlinnPhong.shader" />
     <None Include="Assets\Others\BumpedSpecular.shader" />
     <None Include="Assets\Shaders\OceanWithSines.shader" />
     <None Include="Assets\Others\s.shader" />

@@ -7,8 +7,9 @@ public class mysea : MonoBehaviour
     MeshFilter filter;
     Mesh mesh;
     float timer;
-
-    const float min = 0.0001f;
+    public GameObject pre;
+    private List<GameObject> allpres = new List<GameObject>();
+    const float min = 0.00001f;
     private Vector2[,] RandomNum;
     private Vector2[,] Htildes;
     private Vector2[,] H0s;
@@ -19,13 +20,18 @@ public class mysea : MonoBehaviour
     private Vector2[,] FFT_Dzs;
     private Vector2[,] FFT_Normalxs;
     private Vector2[,] FFT_Normalzs;
+    private Vector2[,] FFT_Bxs;
+    private Vector2[,] FFT_Bys;
+    private Vector2[,] FFT_Bzs;
+    private Vector2[,] FFT_Txs;
+    private Vector2[,] FFT_Tys;
+    private Vector2[,] FFT_Tzs;
     private float[,] ws;
     //风向
-    private Vector2 wind = new Vector2(0.638f, 0.6f);
+    private Vector2 cwind = new Vector2(0.638f, 0.6f).normalized;
     //风速
     public float v = 5;
-    //xoz平面位移剧烈程度
-    public float choppiness = 1;
+    public float q;
     private float l;
 
     private Vector2[] uvs;
@@ -37,7 +43,7 @@ public class mysea : MonoBehaviour
     public int Resolution = 6;
     private int resolution;
     [SerializeField]
-    [Range(0, 1f)] 
+    [Range(0, 2f)] 
     private float Steepness = 0.5f;
     [SerializeField]
     private float Speed = 1f;
@@ -54,6 +60,10 @@ public class mysea : MonoBehaviour
     }
     private void Update()
     {
+        for (int i = 0; i < allpres.Count; i++)
+        {
+            Destroy(allpres[i]);
+        }
         var s = Random.state;
         l = v * v / 9.8f;
         timer += Speed * Time.deltaTime;
@@ -62,14 +72,17 @@ public class mysea : MonoBehaviour
         UpdateH0();
         UpdateW();
         UpdateHtilde();
-        FFT.tfftForHDN(Htildes, resolution, out FFT_Hs, out FFT_Dxs, out FFT_Dzs, out FFT_Normalxs, out FFT_Normalzs);
+        FFTHelper.tfftForHDN(Htildes, resolution, out FFT_Hs, out FFT_Dxs, out FFT_Dzs,
+            out FFT_Normalxs, out FFT_Normalzs, out FFT_Bxs, out FFT_Bys, out FFT_Bzs,
+            out FFT_Txs, out FFT_Tys, out FFT_Tzs);
         GenerateMesh();
+
     }
     private void SetParams()
     {
         vertices = new Vector3[resolution * resolution];
         verttemp = new Vector3[resolution * resolution];
-        indices = new int[(resolution - 1) * (resolution - 1) * 4];
+        indices = new int[(resolution - 1) * (resolution - 1) * 6];
         normals = new Vector3[resolution * resolution];
         H0s = new Vector2[resolution, resolution];
         Htildes = new Vector2[resolution, resolution];
@@ -80,14 +93,12 @@ public class mysea : MonoBehaviour
     }
     private float Phillips(float n, float m)
     {
-        Vector2 k = new Vector2(2 * Mathf.PI * n / resolution, 2 * Mathf.PI * m / resolution);
+        Vector2 wind = cwind * v;
+        Vector2 k = new Vector2(Mathf.PI * (2 * n - resolution) / resolution, Mathf.PI * (2 * m - resolution) / resolution);
         float kdotw2 = Vector2.Dot(k, wind);
         kdotw2 = kdotw2 * kdotw2;
         float klen2 = k.magnitude;
-        if (klen2 < min)
-        {
-            return 0;
-        }
+
         klen2 = klen2 * klen2;
         float klen2l2 = klen2 * l * l;
         float klen4 = klen2 * klen2;
@@ -197,19 +208,15 @@ public class mysea : MonoBehaviour
     /// <summary>
     /// 返回值是复数
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <returns></returns>
     private Vector2 htilde(float t, int n, int m)
     {
         int halfresolution = resolution / 2;
         Vector2 h0 = H0s[halfresolution + n, halfresolution + m];
-        Vector2 h1 = H0s[halfresolution - n - 1, halfresolution - m - 1];
+        Vector2 h1 = H0s[halfresolution + n, halfresolution + m];
         h1.y *= -1;
         float wt = ws[halfresolution + n, halfresolution + m] * t;
         Vector2 c0 = new Vector2(Mathf.Cos(wt), Mathf.Sin(wt));
-        Vector2 c1 = new Vector2(c0.x, -c0.y);
+        Vector2 c1 = new Vector2(-c0.x, -c0.y);
         float x = h0.x * c0.x + h1.x * c1.x - h0.y * c0.y - h1.y * c1.y;
         float y = h0.y * c0.x + h0.x * c0.y + h1.y * c1.x + h1.x * c1.y;
         return new Vector2(x, y);
@@ -223,46 +230,6 @@ public class mysea : MonoBehaviour
         float res = Mathf.Sqrt(nlen + mlen);
         res *= 9.8f;
         return Mathf.Sqrt(res);
-    }
-    private Vector3 Displacement(float x, float y, float t, out Vector3 normal)
-    {
-        int halfresolution = resolution / 2;
-        Vector2 ht;
-        Vector2 k;
-        Vector2 expc;
-        Vector2 htexpc;
-        Vector3 nor = new Vector3(0, 0, 0);
-        float kdotx;
-        float klen;
-        float kx, ky;
-        Vector3 res = new Vector3(0, 0, 0);
-        for (int n = -halfresolution; n < halfresolution; n++)
-        {
-            kx = 2 * Mathf.PI * n / resolution;
-            for (int m = -halfresolution; m < halfresolution; m++)
-            {
-                ky = 2 * Mathf.PI * m / resolution;
-                k = new Vector2(kx, ky);
-                klen = k.magnitude;
-                if (klen < min)
-                {
-                    continue;
-                }
-                kdotx = k.x * x + k.y * y;
-                expc = new Vector2(Mathf.Cos(kdotx), Mathf.Sin(kdotx));
-                ht = Htildes[n + halfresolution, m + halfresolution];
-                htexpc = new Vector2(ht.x * expc.x - ht.y * expc.y,
-                    ht.x * expc.y + ht.y * expc.x);
-                //只有虚部乘以i才是实部
-                res.x += kx / klen * htexpc.y;
-                res.y += htexpc.x;
-                res.z += ky / klen * htexpc.y;
-                //只有虚部乘以i才是实部
-                nor += new Vector3(-kx * htexpc.y, 0f, -ky * htexpc.y);
-            }
-        }
-        normal = Vector3.up - nor;
-        return res;
     }
     private void GenerateMesh()
     {
@@ -282,24 +249,42 @@ public class mysea : MonoBehaviour
                 int currentIdx = i * (resolution) + j;
 
                 Vector3 normal;
-                #region 暴力解DFT
-                //Vector3 dis = Displacement(i, j, timer, out normal);
-                #endregion
                 #region FFT 
                 Vector3 dis = new Vector3(FFT_Dxs[i, j].x, FFT_Hs[i, j].x, FFT_Dzs[i, j].x);
-                normal = Vector3.up - new Vector3(FFT_Normalxs[i, j].x, 0, FFT_Normalzs[i, j].x);
+                Vector3 B = new Vector3(FFT_Bxs[i, j].x, FFT_Bys[i, j].x, FFT_Bzs[i, j].x);
+                B.x *= -q;
+                B.x += 1;
+                B.z *= -q;
+                Vector3 T = new Vector3(FFT_Txs[i, j].x, FFT_Tys[i, j].x, FFT_Tzs[i, j].x);
+                T.x *= -q;
+                T.z *= -q;
+                T.z += 1;
+                normal = Vector3.Cross(T, B).normalized;
+                //normal = Vector3.up - new Vector3(FFT_Normalxs[i, j].x, 0, FFT_Normalzs[i, j].x);
+                normals[currentIdx] = normal;
                 #endregion
-                verttemp[currentIdx].x += dis.x * -choppiness;
+                verttemp[currentIdx].x += dis.x * -q;
                 verttemp[currentIdx].y += dis.y;
-                verttemp[currentIdx].z += dis.z * -choppiness;
+                verttemp[currentIdx].z += dis.z * -q;
                 //雅可比行列式要用
                 Ds[i, j] = dis;
-                normals[currentIdx] = normal;
                 uvs[currentIdx] = new Vector2(i * 1.0f / (resolution - 1), j * 1.0f / (resolution - 1));
+
+                #region 法线debug
+                GameObject preobj;
+                if (i % Resolution/2 == 0 && j % Resolution/2 == 0)
+                {
+                    preobj = GameObject.Instantiate(pre);
+                    allpres.Add(preobj);
+                    preobj.transform.position = verttemp[currentIdx];
+                    preobj.transform.up = normals[currentIdx];
+                }
+                #endregion
             }
         }
+        #region jaco
         Color[] colors = new Color[resolution * resolution];
-
+        /*
         for (int i = 0; i < resolution; i++)//写得并不正确,
         {
             for (int j = 0; j < resolution; j++)
@@ -333,55 +318,37 @@ public class mysea : MonoBehaviour
                 //colors[index] = new Color(xx, xx, xx, xx);
             }
         }
+        */
+        #endregion
         mesh.vertices = verttemp;
         mesh.normals = normals;
         mesh.uv = uvs;
         mesh.colors = colors;
-        int indicescount = 0;
+        int indiceCount = 0;
         #region 面
-        
-        for (int i = 1; i < resolution; i++)
+        for (int i = 0; i < resolution; i++)
         {
-            for (int j = 1; j < resolution; j++)
-            {
-                int currentIdx = i * (resolution) + j;
-                indices[indicescount++] = currentIdx - 1 - resolution;
-                indices[indicescount++] = currentIdx - resolution;
-                indices[indicescount++] = currentIdx;
-                indices[indicescount++] = currentIdx - 1;
-            }
-        }
-        
-        #endregion
-        #region 线
-        /*
-        indices = new int[4 * resolution * resolution - 4 * resolution];
-        for (int i = 1; i < resolution; i++)
-        {
-            for (int j = 1; j < resolution; j++)
+            for (int j = 0; j < resolution; j++)
             {
                 int currentIdx = i * resolution + j;
-                indices[indicescount++] = currentIdx;
-                indices[indicescount++] = currentIdx - resolution;
-                indices[indicescount++] = currentIdx;
-                indices[indicescount++] = currentIdx - 1;
+                if (j == resolution - 1)
+                    continue;
+                if (i != resolution - 1)
+                {
+                    indices[indiceCount++] = currentIdx;
+                    indices[indiceCount++] = currentIdx + 1;
+                    indices[indiceCount++] = currentIdx + resolution;
+                }
+                if (i != 0)
+                {
+                    indices[indiceCount++] = currentIdx;
+                    indices[indiceCount++] = currentIdx - resolution + 1;
+                    indices[indiceCount++] = currentIdx + 1;
+                }
             }
         }
-        for (int i = 1; i < resolution; i++)
-        {
-            indices[indicescount++] = i;
-            indices[indicescount++] = i - 1;
-        }
-        for (int i = 1; i < resolution; i++)
-        {
-            indices[indicescount++] = i * resolution;
-            indices[indicescount++] = i * resolution - resolution;
-        }
-        */
         #endregion
-        mesh.SetIndices(indices, MeshTopology.Quads, 0);
-        //mesh.SetIndices(indices, MeshTopology.Points, 0);
-        //mesh.SetIndices(indices, MeshTopology.Lines, 0);
+        mesh.SetIndices(indices, MeshTopology.Triangles, 0);
         filter.mesh = mesh;
     }
 }
