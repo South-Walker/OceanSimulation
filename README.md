@@ -35,6 +35,7 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTm.gif" alt="show" /><br><br>
 显然该式在形式上类似于一个傅里叶反演，对应的频率域函数表示如下：<br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTht.gif" alt="show" /><br><br>
+<img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTw.gif" alt="show" /><br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTht0.gif" alt="show" /><br><br>
 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/DFTPh.gif" alt="show" /><br><br>
 * <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0x.gif" alt="show" /> 是 <img src="https://github.com/South-Walker/OceanSimulation/blob/master/Formula/tildeh0.gif" alt="show" /> 的共轭复数
