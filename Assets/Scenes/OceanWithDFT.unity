@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 713682143}
   - component: {fileID: 713682142}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: withCPU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,16 +240,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 713682141}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64acfb9d1c5bbed49b7e6ef98a285306, type: 3}
+  m_Script: {fileID: 11500000, guid: ed1ccc3e457026b42a08650605cd96d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hasChanged: 0
   Speed: 1
   EdgeScale: 4
   Q: 1
-  Wind: {x: 5, y: 3}
-  A: 0.001
-  pre: {fileID: 7186317049321834812, guid: 0e54927c4bf42b4438d236a428fa74bf, type: 3}
+  Wind: {x: 5, y: 4}
+  A: 0.01
 --- !u!64 &713682143
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -281,7 +280,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ba25776c9d5caf3429e02a530e438f56, type: 2}
+  - {fileID: 2100000, guid: eb0afd219b5b6594688266f824584292, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
