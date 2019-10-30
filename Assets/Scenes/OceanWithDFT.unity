@@ -245,10 +245,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasChanged: 0
   Speed: 1
-  EdgeScale: 4
+  EdgeScale: 5
   Q: 1
   Wind: {x: 5, y: 4}
   A: 0.01
+  isForce: 0
 --- !u!64 &713682143
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -16,9 +16,18 @@ public class OceanWithDFT : MonoBehaviour
     Vector2 Wind;
     [Range(0f, 1f)]
     public float A;
+    public bool isForce = true;
     #endregion
 
     #region private
+    #region 使用FFT时才会赋值
+    bool hasDoneFFT;
+    Vector2[,] FFT_H;
+    Vector2[,] FFT_Dx;
+    Vector2[,] FFT_Dz;
+    Vector2[,] FFT_Nx;
+    Vector2[,] FFT_Nz;
+    #endregion
     Vector3[] Normals, Vertices, Verttemp;
     Vector2[,] Htildes, Htilde0s, RandomNums;
     Vector2[] UVs;
@@ -51,7 +60,7 @@ public class OceanWithDFT : MonoBehaviour
             Awake();
         }
         timer += Speed * Time.deltaTime;
-
+        hasDoneFFT = false;
         UpdateHtilde();
 
         GenerateMesh();
@@ -228,57 +237,125 @@ public class OceanWithDFT : MonoBehaviour
                 Verttemp[index] = new Vector3(Vertices[index].x, Vertices[index].y, Vertices[index].z);
             }
         }
-        for (int i = 0; i < edgelen; i++)
-        {
-            for (int j = 0; j < edgelen; j++)
-            {
-                int currentIdx = i * edgelen + j;
-                #region DFT
-                Vector3 dis = new Vector3(0, 0, 0);
-                float height = 0;
-                Vector3 nor = new Vector3(0, 1, 0);
-                float kx, kz;
-                float realpart, imagpart;
-                Vector2 ht;
-                float modk;
-                for (int n = -halfedgelen; n < halfedgelen; n++)
-                {
-                    kx = 2 * Mathf.PI * n / edgelen;
-                    for (int m = -halfedgelen; m < halfedgelen; m++)
-                    {
-                        ht = Htildes[n + halfedgelen, m + halfedgelen];
-                        kz = 2 * Mathf.PI * m / edgelen;
 
-                        realpart = Mathf.Cos(kx * i + kz * j);
-                        imagpart = Mathf.Sin(kx * i + kz * j);
-                        //高度
-                        height += ht.x * realpart - ht.y * imagpart;
-                        //法线
-                        nor.x = nor.x - kx * (ht.x * imagpart + ht.y * realpart) * -1;
-                        nor.z = nor.z - kz * (ht.x * imagpart + ht.y * realpart) * -1;
-                        modk = kx * kx + kz * kz;
-                        modk = Mathf.Sqrt(modk);
-                        if (modk < Min)
-                        {
-                            continue;
-                        }
-                        //水平位移
-                        dis.x = dis.x + kx * (ht.x * imagpart + ht.y * realpart) / modk;
-                        dis.z = dis.z + kz * (ht.x * imagpart + ht.y * realpart) / modk;
-                    }
-                }
-                Verttemp[currentIdx].x += dis.x * -Q;
-                Verttemp[currentIdx].y += height;
-                Verttemp[currentIdx].z += dis.z * -Q;
+        for (int x = 0; x < edgelen; x++)
+        {
+            for (int z = 0; z < edgelen; z++)
+            {
+                int currentIdx = x * edgelen + z;
+                Vector3 dis, nor;
+                if (isForce)
+                    dis = getDFTWithForce(x, z, out nor);
+                else
+                    dis = getFFT(x, z, out nor);
+                Verttemp[currentIdx] += dis;
                 Normals[currentIdx] = nor;
-                UVs[currentIdx] = new Vector2(i * 1.0f / (edgelen - 1), j * 1.0f / (edgelen - 1));
-                #endregion
+                UVs[currentIdx] = new Vector2(x * 1.0f / (edgelen - 1), z * 1.0f / (edgelen - 1));
             }
         }
+
+
         mesh.vertices = Verttemp;
         mesh.normals = Normals;
         mesh.uv = UVs;
-        #region 面
+        TopologyWithTriangles();
+        filter.mesh = mesh;
+    }
+    /// <summary>
+    /// 修改这个时记得也要修改对应的数组长度，因为不打算把这个做成可交互的，就算了
+    /// </summary>
+    private Vector3 getDFTWithForce(int x, int z, out Vector3 normal)
+    {
+        float kx, kz;
+        float realpart, imagpart;
+        Vector2 ht;
+        float modk;
+        int halfedgelen = edgelen / 2;
+        Vector3 res = new Vector3(0, 0, 0);
+        normal = new Vector3(0, 1, 0);
+        for (int n = -halfedgelen; n < halfedgelen; n++)
+        {
+            kx = 2 * Mathf.PI * n / edgelen;
+            for (int m = -halfedgelen; m < halfedgelen; m++)
+            {
+                ht = Htildes[n + halfedgelen, m + halfedgelen];
+                kz = 2 * Mathf.PI * m / edgelen;
+
+                realpart = Mathf.Cos(kx * x + kz * z);
+                imagpart = Mathf.Sin(kx * x + kz * z);
+                //高度
+                res.y += ht.x * realpart - ht.y * imagpart;
+                //法线
+                normal.x = normal.x - kx * (ht.x * imagpart + ht.y * realpart) * -1;
+                normal.z = normal.z - kz * (ht.x * imagpart + ht.y * realpart) * -1;
+                modk = kx * kx + kz * kz;
+                modk = Mathf.Sqrt(modk);
+                if (modk < Min)
+                {
+                    continue;
+                }
+                //水平位移
+                res.x = res.x + kx * (ht.x * imagpart + ht.y * realpart) / modk;
+                res.z = res.z + kz * (ht.x * imagpart + ht.y * realpart) / modk;
+            }
+        }
+        res.x *= -Q;
+        res.z *= -Q;
+        return res;
+    }
+    private Vector3 getFFT(int x, int z, out Vector3 normal)
+    {
+        if (!hasDoneFFT)
+        {
+            hasDoneFFT = true;
+            FFT_H = new Vector2[edgelen, edgelen];
+            FFT_Dx = new Vector2[edgelen, edgelen];
+            FFT_Dz = new Vector2[edgelen, edgelen];
+            FFT_Nx = new Vector2[edgelen, edgelen];
+            FFT_Nz = new Vector2[edgelen, edgelen];
+            int halfedgelen = edgelen / 2;
+            float kx, kz;
+            Vector2 k;
+            Vector2 ht;
+            int uaddh;
+            int vaddh;
+            for (int u = -halfedgelen; u < halfedgelen; u++)
+            {
+                kx = 2 * Mathf.PI * u / edgelen;
+                for (int v = -halfedgelen; v < halfedgelen; v++)
+                {
+                    kz = 2 * Mathf.PI * v / edgelen;
+                    k = new Vector2(kx, kz);
+                    uaddh = u + halfedgelen;
+                    vaddh = v + halfedgelen;
+                    ht = Htildes[uaddh, vaddh];
+                    FFT_H[uaddh, vaddh] = new Vector2(ht.x, ht.y);
+                    FFT_Nx[uaddh, vaddh] = new Vector2(-ht.y * kx, ht.x * kx);
+                    FFT_Nz[uaddh, vaddh] = new Vector2(-ht.y * kz, ht.x * kz);
+
+                    if (k.magnitude < Min)
+                    {
+                        FFT_Dx[uaddh, vaddh] = new Vector2(0, 0);
+                        FFT_Dz[uaddh, vaddh] = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        FFT_Dx[uaddh, vaddh] = new Vector2(ht.y * kx / k.magnitude, ht.x * kx / k.magnitude);
+                        FFT_Dz[uaddh, vaddh] = new Vector2(ht.y * kz / k.magnitude, ht.x * kz / k.magnitude);
+                    }
+                }
+            }
+            FFTHelper.FFT(FFT_H, edgelen);
+            FFTHelper.FFT(FFT_Nx, edgelen);
+            FFTHelper.FFT(FFT_Nz, edgelen);
+            FFTHelper.FFT(FFT_Dx, edgelen);
+            FFTHelper.FFT(FFT_Dz, edgelen);
+        }
+        normal = new Vector3(0, 1, 0) - new Vector3(FFT_Nx[x, z].x, 0, FFT_Nz[x, z].x);
+        return new Vector3(FFT_Dx[x, z].x, FFT_H[x, z].x, FFT_Dz[x, z].x);
+    }
+    private void TopologyWithTriangles()
+    {
         int indiceCount = 0;
         for (int i = 0; i < edgelen; i++)
         {
@@ -302,8 +379,6 @@ public class OceanWithDFT : MonoBehaviour
             }
         }
         mesh.SetIndices(Indices, MeshTopology.Triangles, 0);
-        filter.mesh = mesh;
-        #endregion
     }
     #endregion
 }

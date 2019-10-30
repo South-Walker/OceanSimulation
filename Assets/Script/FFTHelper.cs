@@ -2,85 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ComplexNumber
+public class FFTHelper
 {
-    public float ImaginaryPart;
-    public float ResistivePart;
-    public Vector2 toV2()
-    {
-        return new Vector2(ResistivePart, ImaginaryPart);
-    }
-    public ComplexNumber(Vector2 v2)
-    {
-        ResistivePart = v2.x;
-        ImaginaryPart = v2.y;
-    }
-    public static ComplexNumber operator +(ComplexNumber a, ComplexNumber b)
-    {
-        ComplexNumber r = new ComplexNumber(a.ImaginaryPart + b.ImaginaryPart, a.ResistivePart + b.ResistivePart);
-        return r;
-    }
-    public static ComplexNumber operator *(ComplexNumber a, ComplexNumber b)
-    {
-        ComplexNumber r = new ComplexNumber(a);
-        r.Multiply(b);
-        return r;
-    }
-    public static ComplexNumber operator -(ComplexNumber a, ComplexNumber b)
-    {
-        ComplexNumber r = new ComplexNumber(a.ImaginaryPart - b.ImaginaryPart, a.ResistivePart - b.ResistivePart);
-        return r;
-    }
-    public void SetZero()
-    {
-        ImaginaryPart = 0;
-        ResistivePart = 0;
-    }
-    public void Conjugate()
-    {
-        ImaginaryPart *= -1;
-    }
-    public ComplexNumber(float imaginary, float resistive)
-    {
-        ImaginaryPart = imaginary;
-        ResistivePart = resistive;
-    }
-    public ComplexNumber(ComplexNumber cn)
-    {
-        ImaginaryPart = cn.ImaginaryPart;
-        ResistivePart = cn.ResistivePart;
-    }
-    public ComplexNumber()
-    {
-        ImaginaryPart = 0;
-        ResistivePart = 0;
-    }
-    public void Multiply(float a)
-    {
-        ImaginaryPart *= a;
-        ResistivePart *= a;
-    }
-    public void Multiply(ComplexNumber a)
-    {
-        float t;
-        t = a.ResistivePart * ImaginaryPart + ResistivePart * a.ImaginaryPart;
-        ResistivePart = a.ResistivePart * ResistivePart - a.ImaginaryPart * ImaginaryPart;
-        ImaginaryPart = t;
-    }
-    public void Divide(float a)
-    {
-        ImaginaryPart /= a;
-        ResistivePart /= a;
-    }
-    public void Add(ComplexNumber a)
-    {
-        ImaginaryPart += a.ImaginaryPart;
-        ResistivePart += a.ResistivePart;
-    }
-}
-public static class tFFTHelper
-{
-    const float MIN = 0.0000001f;
+    const float MIN = 0.00001f;
     public static Vector2 w(float k, float n)
     {
         Vector2 r = new Vector2();
