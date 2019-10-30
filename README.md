@@ -56,6 +56,8 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 暴力求解上述方程计算量过大，观察到高度场函数与水平面上的位移函数都满足离散傅里叶反变换的基本形式，故可以考虑使用快速傅里叶变换算法来优化。
 说到快速傅里叶变换（FFT）一个非常标准的实现是Cooley与Tuckey发明的蝶形算法，基于该思想在CPU上实现的二维FFT被封装在FFTHelper类中。
 
+## todo
+fft应该有点问题，看看法线对不对
 
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
