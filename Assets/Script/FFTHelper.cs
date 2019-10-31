@@ -125,14 +125,12 @@ public class FFTHelper
                 f[x, y] = cntemp[x];
             }
         }
-        float flag = 1;
         for (int x = 0; x < count; x++)
         {
-            flag *= -1;
             for (int y = 0; y < count; y++)
             {
-                flag *= -1;
-                f[x, y] *= flag;
+                if ((x + y) % 2 != 0)
+                    f[x, y] *= -1;
             }
         }
     }

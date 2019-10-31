@@ -251,6 +251,7 @@ public class OceanWithDFT : MonoBehaviour
                 Verttemp[currentIdx] += dis;
                 Normals[currentIdx] = nor;
                 UVs[currentIdx] = new Vector2(x * 1.0f / (edgelen - 1), z * 1.0f / (edgelen - 1));
+
             }
         }
 
@@ -330,19 +331,26 @@ public class OceanWithDFT : MonoBehaviour
                     vaddh = v + halfedgelen;
                     ht = Htildes[uaddh, vaddh];
                     FFT_H[uaddh, vaddh] = new Vector2(ht.x, ht.y);
-                    FFT_Nx[uaddh, vaddh] = new Vector2(-ht.y * kx, ht.x * kx);
-                    FFT_Nz[uaddh, vaddh] = new Vector2(-ht.y * kz, ht.x * kz);
 
                     if (k.magnitude < Min)
                     {
+                        FFT_Nx[uaddh, vaddh] = new Vector2(0, 0);
+                        FFT_Nz[uaddh, vaddh] = new Vector2(0, 0);
                         FFT_Dx[uaddh, vaddh] = new Vector2(0, 0);
                         FFT_Dz[uaddh, vaddh] = new Vector2(0, 0);
                     }
                     else
                     {
-                        FFT_Dx[uaddh, vaddh] = new Vector2(ht.y * kx / k.magnitude, ht.x * kx / k.magnitude);
-                        FFT_Dz[uaddh, vaddh] = new Vector2(ht.y * kz / k.magnitude, ht.x * kz / k.magnitude);
+                        FFT_Nx[uaddh, vaddh] = new Vector2(-ht.y * kx, ht.x * kx);
+                        FFT_Nz[uaddh, vaddh] = new Vector2(-ht.y * kz, ht.x * kz);
+                        FFT_Dx[uaddh, vaddh] = new Vector2(ht.y * kx / k.magnitude, -ht.x * kx / k.magnitude);
+                        FFT_Dz[uaddh, vaddh] = new Vector2(ht.y * kz / k.magnitude, -ht.x * kz / k.magnitude);
                     }
+                    FFT_H[uaddh, vaddh].y *= -1;
+                    FFT_Nx[uaddh, vaddh].y *= -1;
+                    FFT_Nz[uaddh, vaddh].y *= -1;
+                    FFT_Dx[uaddh, vaddh].y *= -1;
+                    FFT_Dz[uaddh, vaddh].y *= -1;
                 }
             }
             FFTHelper.FFT(FFT_H, edgelen);
@@ -352,7 +360,7 @@ public class OceanWithDFT : MonoBehaviour
             FFTHelper.FFT(FFT_Dz, edgelen);
         }
         normal = new Vector3(0, 1, 0) - new Vector3(FFT_Nx[x, z].x, 0, FFT_Nz[x, z].x);
-        return new Vector3(FFT_Dx[x, z].x, FFT_H[x, z].x, FFT_Dz[x, z].x);
+        return new Vector3(FFT_Dx[x, z].x * -Q, FFT_H[x, z].x, FFT_Dz[x, z].x * -Q);
     }
     private void TopologyWithTriangles()
     {
