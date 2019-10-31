@@ -49,15 +49,14 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 ![](/Formula/DFTNor.gif)<br><br>
 
 
-基于上述方程在CPU上运算，对于16x16个顶点的模型，效果图如下：(黑线是用来验证法线正确性的，请忽略)<br><br>
+基于上述方程在CPU上运算，对于16x16个顶点的平面，效果图如下：(黑线是用来验证法线正确性的，请忽略)<br><br>
 ![](/Gif/DFT.gif)<br><br>
 * 由于计算量过大，这个级别基本上到了性能瓶颈
 
 暴力求解上述方程计算量过大，观察到高度场函数与水平面上的位移函数都满足离散傅里叶反变换的基本形式，故可以考虑使用快速傅里叶变换算法来优化。
-说到快速傅里叶变换（FFT）一个非常标准的实现是Cooley与Tuckey发明的蝶形算法，基于该思想在CPU上实现的二维FFT被封装在FFTHelper类中。
-
-## todo
-fft应该有点问题，看看法线对不对
+说到快速傅里叶变换（FFT）一个非常标准的实现是Cooley与Tuckey发明的蝶形算法，基于该思想在CPU上实现的二维FFT被封装在FFTHelper类中。<br><br>
+![](/Gif/FFT.gif)<br><br>
+上图对应的是一个基于二维FFT算法在CPU上计算的，包含32x32个顶点的平面。
 
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
