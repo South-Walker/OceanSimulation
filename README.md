@@ -41,7 +41,8 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 ![](/Formula/DFTPh.gif)<br><br>
 * ![](/Formula/tildeh0x.gif) 是 ![](/Formula/tildeh0.gif) 的共轭复数
 * ![](/Formula/A.gif) 表示波峰高度 ![](/Formula/VecW.gif) ,表示风向
-* ![](/Formula/L.gif) 满足等式 ![](/Formula/DFTL.gif) 表示风速 ![](/Formula/V.gif) 对波峰高度的限制。
+* ![](/Formula/L.gif) 满足等式 ![](/Formula/DFTL.gif) 表示风速 ![](/Formula/V.gif) 对波峰高度的限制。<br>
+* 为了获得满足正态分布的随机数，先用内置库函数取得了在0-1内服从均匀分布的随机数，随后使用Box-Muller算法将其转变为服从正态分布的随机数
 
 ### 在CPU上计算
 原理上通过上述等式已经可以基于高度场描述海洋曲面了，但为了获得更陡峭的波峰与更宽广的波谷，可以借鉴Gerstner波模型的思路，加入顶点在水平面上的位移,在这里用向量 ![](/Formula/VecD.gif) 表示，具体计算方法如下：<br><br>
