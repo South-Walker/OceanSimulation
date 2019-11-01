@@ -77,7 +77,7 @@ float random (vec2 st)
         43758.5453123);
 }
 ```
-具体原理大概是随着乘数变大，小数部分的粒度将正弦波的流动性破坏为伪随机的混沌<sup>[4]</sup>,具体的常量取值是魔值。
+原理大概是随着乘数变大，小数部分的粒度将正弦波的流动性破坏为伪随机的混沌<sup>[4]</sup>。具体的常量取值是魔值。
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
 [2] [Ocean simulation part one: using the discrete Fourier transform](https://www.keithlantz.net/2011/10/ocean-simulation-part-one-using-the-discrete-fourier-transform/) <br>
