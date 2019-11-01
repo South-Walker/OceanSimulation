@@ -26,6 +26,7 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 ##
 可以观察到其较正弦波模型有更陡峭的波峰与更宽广的波谷。
 ## 海洋统计学模型
+### 基础原理
 有学者根据大量海洋浮标的实际运动，在高度场上建立了更加贴合现实且具有良好数学特性的海洋表面模型,在时刻t下某坐标对应的水面高度如下：<br><br>
 ![](/Formula/DFTH.gif)<br><br>
 其中输入参数为顶点水平面坐标，方便起见写成了向量形式，向量k具体取值如下：<br><br>
@@ -42,7 +43,7 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 * ![](/Formula/A.gif) 表示波峰高度 ![](/Formula/VecW.gif) ,表示风向
 * ![](/Formula/L.gif) 满足等式 ![](/Formula/DFTL.gif) 表示风速 ![](/Formula/V.gif) 对波峰高度的限制。
 
-
+### 在CPU上计算
 原理上通过上述等式已经可以基于高度场描述海洋曲面了，但为了获得更陡峭的波峰与更宽广的波谷，可以借鉴Gerstner波模型的思路，加入顶点在水平面上的位移,在这里用向量 ![](/Formula/VecD.gif) 表示，具体计算方法如下：<br><br>
 ![](/Formula/DFTD.gif)<br><br>
 出于方便渲染考虑，往往还需要计算出对应顶点的法线<br><br>
@@ -59,7 +60,26 @@ Gerstner波模型并不是只基于高度场的模型，在该模型中，时刻
 ![](/Gif/FFT.gif)<br><br>
 上图对应的是一个基于二维FFT算法在CPU上计算的，包含32x32个顶点的平面。
 
+### 在GPU上计算
+在GPU上进行上述运算稍微复杂一点，首先注意到为了计算初始的 ![](/Formula/tildeh0.gif) 值，需要实现能够在GPU上求解的随机数算法，一个非常经典的算法如下：<br>
+```c
+//一维
+float random (float s)
+{
+    return fract(sin(s*12.9898)*
+        43758.5453123);
+}
+//二维
+float random (vec2 st) 
+{
+    return fract(sin(dot(st.xy,
+                         vec2(12.9898,78.233)))*
+        43758.5453123);
+}
+```
+具体原理大概是随着乘数变大，小数部分的粒度将正弦波的流动性破坏为伪随机的混沌<sup>[4]</sup>,具体的常量取值是魔值。
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
 [2] [Ocean simulation part one: using the discrete Fourier transform](https://www.keithlantz.net/2011/10/ocean-simulation-part-one-using-the-discrete-fourier-transform/) <br>
-[3] Tessendorf, Jerry. Simulating Ocean Water. In SIGGRAPH 2002 Course Notes #9 (Simulating Nature: Realistic and Interactive Techniques), ACM Press. 
+[3] Tessendorf, Jerry. Simulating Ocean Water. In SIGGRAPH 2002 Course Notes #9 (Simulating Nature: Realistic and Interactive Techniques), ACM Press. <br>
+[4] [The Book of Shaders](https://thebookofshaders.com/)
