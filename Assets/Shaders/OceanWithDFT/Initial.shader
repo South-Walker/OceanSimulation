@@ -1,22 +1,22 @@
-﻿Shader "Hidden/s"
+﻿Shader "Hidden/Initial"
 {
-    Properties
-    {
-        _MainTex ("Texture", 2D) = "white" {}
-    }
-    SubShader
-    {
-        // No culling or depth
-        Cull Off ZWrite Off ZTest Always
+	Properties
+	{
 
-        Pass
-        {
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+	}
+	SubShader
+	{
+		Cull Off ZWrite Off ZTest Always
+		Pass
+		{
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
 
-            #include "UnityCG.cginc"
-
+			#include "Common.cginc"
+			float _A;
+			int _Len;
+			float2 _Wind;
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -39,12 +39,14 @@
 
             sampler2D _MainTex;
 
-            fixed4 frag (v2f i) : SV_Target
-            {
-                fixed4 col = tex2D(_MainTex, i.uv);
-                // just invert the colors
-                col.rgb = 1 - col.rgb;
-                return col;
+			fixed4 frag(v2f i) : SV_Target
+			{
+				float2 uv = float2(i.uv.x - 0.5,i.uv.y - 0.5);
+				uv *= _Len;
+				float phi = Phillips(uv, _A, _Len, _Wind);
+				float2 ht0 = Htilde0(uv, phi);
+				float2 ht0conj = Conj(ht0);
+				return fixed4(ht0, ht0conj);
             }
             ENDCG
         }

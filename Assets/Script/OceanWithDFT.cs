@@ -178,27 +178,14 @@ public class OceanWithDFT : MonoBehaviour
         //Box Muller方法
         Vector2 y = new Vector2();
         float v1 = 0, v2 = 0, a, b;
-        for (int i = 0; i < 2;)
-        {
-            v1 = Random.Range(0.001f, 1f);
-            v2 = Random.Range(0.001f, 1f);
-            a = Mathf.Sqrt(-2f * Mathf.Log(v1));
-            b = 2 * Mathf.PI * v2;
-            v1 = a * Mathf.Cos(b);
-            if (v1 <= 1 && v1 >= 0)
-            {
-                y.x = v1;
-                i++;
-            }
-            if (i == 2)
-                break;
-            v2 = a * Mathf.Sin(b);
-            if (v2 <= 1 && v2 >= 0)
-            {
-                y.y = v2;
-                i++;
-            }
-        }
+        v1 = Random.Range(0.001f, 1f);
+        v2 = Random.Range(0.001f, 1f);
+        a = Mathf.Sqrt(-2f * Mathf.Log(v1));
+        b = 2 * Mathf.PI * v2;
+        v1 = a * Mathf.Cos(b);
+        y.x = v1;
+        v2 = a * Mathf.Sin(b);
+        y.y = v2;
         return y;
     }
     #endregion
