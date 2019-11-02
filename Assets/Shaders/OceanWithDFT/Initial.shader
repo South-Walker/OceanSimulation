@@ -39,14 +39,16 @@
 
             sampler2D _MainTex;
 
-			fixed4 frag(v2f i) : SV_Target
+			float4 frag(v2f i) : SV_Target
 			{
-				float2 uv = float2(i.uv.x - 0.5,i.uv.y - 0.5);
+				float2 uv = float2(i.uv.x,i.uv.y);
 				uv *= _Len;
-				float phi = Phillips(uv, _A, _Len, _Wind);
-				float2 ht0 = Htilde0(uv, phi);
-				float2 ht0conj = Conj(ht0);
-				return fixed4(ht0, ht0conj);
+				float2 uvt = float2(_Len, _Len) - uv;
+				float phi1 = Phillips(uv, _A, _Len, _Wind);
+				float phi2 = Phillips(uvt, _A, _Len, _Wind);
+				float2 ht0 = Htilde0(uv, phi1);
+				float2 ht0conj = Conj(Htilde0(uvt, phi2));
+				return float4(ht0, ht0conj);
             }
             ENDCG
         }

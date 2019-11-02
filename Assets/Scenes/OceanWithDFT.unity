@@ -442,11 +442,19 @@ MonoBehaviour:
   Speed: 1
   EdgeScale: 10
   Q: 1
-  Wind: {x: 3, y: 2}
-  A: 0.01
+  Wind: {x: 29.01, y: 48.53}
+  A: 2.63
   isForce: 1
   initialShader: {fileID: 4800000, guid: da99d0dc620cc174292687161a03d99e, type: 3}
+  omegaktShader: {fileID: 4800000, guid: ccfe2a89035e2a2468dcd09543d60ed2, type: 3}
+  htildeShader: {fileID: 4800000, guid: 3509cb0ebe878c04d92b5b7a769f79de, type: 3}
+  fftShader: {fileID: 4800000, guid: 93ab7a0c1684abe418169886ab488784, type: 3}
   initialTexture: {fileID: 0}
+  omegaktTexture: {fileID: 0}
+  htildeTexture: {fileID: 0}
+  heightTexture: {fileID: 0}
+  testmat: {fileID: 2100000, guid: 302ac9c3cf6cdbd4ca59871aba1bc35b, type: 2}
+  isSave: 1
 --- !u!64 &1099721758
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -478,7 +486,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 302ac9c3cf6cdbd4ca59871aba1bc35b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

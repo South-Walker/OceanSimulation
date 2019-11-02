@@ -70,7 +70,11 @@
     <Compile Include="Assets\Script\ShaderWave.cs" />
     <None Include="Assets\Shaders\OceanWithDFT\Common.cginc" />
     <None Include="Assets\Shaders\OceanWithSines.shader" />
+    <None Include="Assets\Shaders\OceanWithDFT\OmegaKT.shader" />
+    <None Include="Assets\heighttest.shader" />
+    <None Include="Assets\Shaders\OceanWithDFT\Stockham.shader" />
     <None Include="Assets\Shaders\OceanWithDFT\Initial.shader" />
+    <None Include="Assets\Shaders\OceanWithDFT\Htilde.shader" />
     <None Include="Assets\Shaders\OceanWithGerstner.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/lenovo/Desktop/OceanSimulation/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
