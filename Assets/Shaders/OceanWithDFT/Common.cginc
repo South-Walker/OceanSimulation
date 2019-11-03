@@ -3,13 +3,14 @@ static float PI = 3.14159;
 static float MIN = 0.0001;
 static float G = 9.8;
 
-inline float Random(float2 uv)
+inline float Random(float2 uv, float salt)
 {
-	return frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453);
+	float2 seed = uv + float2(salt, -salt);
+	return frac(sin(dot(seed, float2(12.9898, 78.233))) * 43758.5453);
 }
-inline float2 NormalDistribution(float2 uv)
+inline float2 NormalDistribution(float2 uv, float salt)
 {
-	float2 UniformDistribution = Random(uv);
+	float2 UniformDistribution = Random(uv, salt);
 	UniformDistribution.x = clamp(UniformDistribution.x, 0.01, 1);
 	UniformDistribution.y = clamp(UniformDistribution.y, 0.01, 1);
 	float a = sqrt(-2 * log(UniformDistribution.x));
@@ -26,11 +27,13 @@ inline float2 Conj(float2 i)
 }
 inline float2 GetK(float2 uv, float len)
 {
+	uv -= 0.5;
+	uv.x = (uv.x < len * 0.5) ? uv.x : uv.x - len;
+	uv.y = (uv.y < len * 0.5) ? uv.y : uv.y - len;
 	return 2 * PI * float2(uv.x / len, uv.y / len);
 }
 inline float Phillips(float2 uv, float a, float len, float2 wind)
 {
-	uv -= float2(len / 2, len / 2);
 	float2 k = GetK(uv, len);
 	float klen = length(k);
 	if (klen < MIN)
@@ -45,10 +48,10 @@ inline float Phillips(float2 uv, float a, float len, float2 wind)
 	return a * exp(-1 / klen2 / l2) / klen4 * kdotw2;
 }
 //·µ»Ø¸´Êý
-inline float2 Htilde0(float2 uv, float phi)
+inline float2 Htilde0(float2 uv, float phi, float salt)
 {
 	float temp = sqrt(phi / 2);
-	float2 r = NormalDistribution(uv);
+	float2 r = NormalDistribution(uv, salt);
 	return float2(r.x * temp, r.y * temp);
 }
 inline float GetOmega(float2 uv, float len)

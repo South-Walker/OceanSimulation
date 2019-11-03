@@ -247,8 +247,8 @@ MonoBehaviour:
   Speed: 1
   EdgeScale: 5
   Q: 1
-  Wind: {x: 5, y: 1}
-  A: 0.01
+  Wind: {x: 5, y: 5}
+  A: 0.816
   isForce: 0
 --- !u!64 &713682143
 MeshCollider:
@@ -442,8 +442,8 @@ MonoBehaviour:
   Speed: 1
   EdgeScale: 10
   Q: 1
-  Wind: {x: 29.01, y: 48.53}
-  A: 2.63
+  Wind: {x: 14, y: 14}
+  A: 5
   isForce: 1
   initialShader: {fileID: 4800000, guid: da99d0dc620cc174292687161a03d99e, type: 3}
   omegaktShader: {fileID: 4800000, guid: ccfe2a89035e2a2468dcd09543d60ed2, type: 3}
@@ -454,7 +454,6 @@ MonoBehaviour:
   htildeTexture: {fileID: 0}
   heightTexture: {fileID: 0}
   testmat: {fileID: 2100000, guid: 302ac9c3cf6cdbd4ca59871aba1bc35b, type: 2}
-  isSave: 1
 --- !u!64 &1099721758
 MeshCollider:
   m_ObjectHideFlags: 0

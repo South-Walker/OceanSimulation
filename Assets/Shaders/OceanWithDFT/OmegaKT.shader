@@ -16,7 +16,7 @@
 
             #include "Common.cginc"
 
-			float _DeltaT;
+			float _Timer;
 			int _Len;
 			sampler2D _LastT;
             struct appdata
@@ -41,12 +41,11 @@
 
             float4 frag (v2f i) : SV_Target
             {
-				//float last = tex2D(_LastT, i.uv).r;
-				float2 uv = float2(i.uv.x - 0.5,i.uv.y - 0.5);
+				float2 uv = i.uv;
 				uv *= _Len;
 				float2 k = GetK(uv, _Len);
 				float omega = sqrt(G * length(k));
-				float omegakt = _Time.y * omega;//+last;
+				float omegakt = _Timer * omega;
 				omegakt = fmod(omegakt, 2 * PI);
 				return float4(omegakt, 0, 0, 0);
             }

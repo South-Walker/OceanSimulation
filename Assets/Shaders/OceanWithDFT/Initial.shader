@@ -41,13 +41,13 @@
 
 			float4 frag(v2f i) : SV_Target
 			{
-				float2 uv = float2(i.uv.x,i.uv.y);
+				float2 uv = i.uv;
 				uv *= _Len;
-				float2 uvt = float2(_Len, _Len) - uv;
+				float2 uvt = float2(_Len - uv.x, _Len - uv.y);
 				float phi1 = Phillips(uv, _A, _Len, _Wind);
 				float phi2 = Phillips(uvt, _A, _Len, _Wind);
-				float2 ht0 = Htilde0(uv, phi1);
-				float2 ht0conj = Conj(Htilde0(uvt, phi2));
+				float2 ht0 = Htilde0(uv, phi1, 196);
+				float2 ht0conj = Conj(Htilde0(uv, phi2, 223));
 				return float4(ht0, ht0conj);
             }
             ENDCG
