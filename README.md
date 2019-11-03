@@ -85,3 +85,4 @@ float random (vec2 st)
 [2] [Ocean simulation part one: using the discrete Fourier transform](https://www.keithlantz.net/2011/10/ocean-simulation-part-one-using-the-discrete-fourier-transform/) <br>
 [3] Tessendorf, Jerry. Simulating Ocean Water. In SIGGRAPH 2002 Course Notes #9 (Simulating Nature: Realistic and Interactive Techniques), ACM Press. <br>
 [4] [The Book of Shaders](https://thebookofshaders.com/)
+[5] [Mistral-Water]https://github.com/AlphaMistral/Mistral-Water
