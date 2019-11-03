@@ -21,6 +21,10 @@ inline float2 ComplexNumberMultiply(float2 a, float2 b)
 {
 	return float2(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);
 }
+inline float2 iMultiply(float2 a)
+{
+	return float2(-a.y, a.x);
+}
 inline float2 Conj(float2 i)
 {
 	return float2(i.x, -i.y);

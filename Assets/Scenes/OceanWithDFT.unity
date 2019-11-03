@@ -443,16 +443,20 @@ MonoBehaviour:
   EdgeScale: 10
   Q: 1
   Wind: {x: 14, y: 14}
-  A: 5
+  A: 0.6
   isForce: 1
   initialShader: {fileID: 4800000, guid: da99d0dc620cc174292687161a03d99e, type: 3}
   omegaktShader: {fileID: 4800000, guid: ccfe2a89035e2a2468dcd09543d60ed2, type: 3}
   htildeShader: {fileID: 4800000, guid: 3509cb0ebe878c04d92b5b7a769f79de, type: 3}
+  displaceShader: {fileID: 4800000, guid: 2a995688e4c1d9a4abe8e03dcf56a9ca, type: 3}
+  normalShader: {fileID: 4800000, guid: 054b36a715f4b6447ae0538902615516, type: 3}
   fftShader: {fileID: 4800000, guid: 93ab7a0c1684abe418169886ab488784, type: 3}
   initialTexture: {fileID: 0}
   omegaktTexture: {fileID: 0}
   htildeTexture: {fileID: 0}
   heightTexture: {fileID: 0}
+  displaceTexture: {fileID: 0}
+  normalTexture: {fileID: 0}
   testmat: {fileID: 2100000, guid: 302ac9c3cf6cdbd4ca59871aba1bc35b, type: 2}
 --- !u!64 &1099721758
 MeshCollider:
@@ -521,7 +525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099721756}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9244661, y: -26.472645, z: -17.688707}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

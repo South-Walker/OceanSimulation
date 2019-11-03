@@ -34,7 +34,7 @@
             v2f vert (appdata v)
             {
                 v2f o;
-				v.vertex.y += tex2Dlod(_Height, v.uv).r;
+				//v.vertex.y += tex2Dlod(_Height, v.uv).r;
 				o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv.xy;
                 return o;

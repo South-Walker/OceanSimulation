@@ -70,6 +70,8 @@
     <Compile Include="Assets\Script\ShaderWave.cs" />
     <None Include="Assets\Shaders\OceanWithDFT\Common.cginc" />
     <None Include="Assets\Shaders\OceanWithSines.shader" />
+    <None Include="Assets\Shaders\OceanWithDFT\Normal.shader" />
+    <None Include="Assets\Shaders\OceanWithDFT\Displace.shader" />
     <None Include="Assets\Shaders\OceanWithDFT\OmegaKT.shader" />
     <None Include="Assets\heighttest.shader" />
     <None Include="Assets\Shaders\OceanWithDFT\Stockham.shader" />

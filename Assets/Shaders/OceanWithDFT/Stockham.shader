@@ -1,4 +1,4 @@
-﻿Shader "Hidden/Mistral Water/Helper/Vertex/Stockham"
+﻿Shader "Hidden/Stockham"
 {
 	Properties
 	{
@@ -17,13 +17,13 @@
 
 			#include "Common.cginc"
 
+			sampler2D _Input;
+			float _Len;
+			float _SubLen;
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma multi_compile _HORIZONTAL _VERTICAL
 
-			sampler2D _Input;
-			float _Len;
-			float _SubLen;
 
 			struct appdata
 			{

@@ -47,7 +47,7 @@
 				float phi1 = Phillips(uv, _A, _Len, _Wind);
 				float phi2 = Phillips(uvt, _A, _Len, _Wind);
 				float2 ht0 = Htilde0(uv, phi1, 196);
-				float2 ht0conj = Conj(Htilde0(uv, phi2, 223));
+				float2 ht0conj = Conj(Htilde0(-uv, phi2, 223));
 				return float4(ht0, ht0conj);
             }
             ENDCG
