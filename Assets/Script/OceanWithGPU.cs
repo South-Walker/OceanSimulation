@@ -140,6 +140,13 @@ public class OceanWithGPU : MonoBehaviour
             Graphics.Blit(null, outputTexture, fftMat);
         }
         #endregion
+        normalMat.SetInt("_Len", edgelen);
+        normalMat.SetTexture("_Height", heightTexture);
+        normalMat.SetTexture("_Displace", displaceTexture);
+        Graphics.Blit(null, normalTexture, normalMat);
+        testmat.SetTexture("_Height", heightTexture);
+        testmat.SetTexture("_Displace", displaceTexture);
+        testmat.SetTexture("_Normal", normalTexture);
     }
     #region start
     private void SetVertices()
@@ -225,6 +232,7 @@ public class OceanWithGPU : MonoBehaviour
         tempb = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
         heightTexture = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
         displaceTexture = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
+        normalTexture = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
     }
     #endregion
 }

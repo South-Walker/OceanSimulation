@@ -442,8 +442,8 @@ MonoBehaviour:
   Speed: 1
   EdgeScale: 10
   Q: 1
-  Wind: {x: 14, y: 14}
-  A: 0.6
+  Wind: {x: 50, y: 50}
+  A: 0.05
   isForce: 1
   initialShader: {fileID: 4800000, guid: da99d0dc620cc174292687161a03d99e, type: 3}
   omegaktShader: {fileID: 4800000, guid: ccfe2a89035e2a2468dcd09543d60ed2, type: 3}

@@ -18,7 +18,10 @@
             #include "UnityCG.cginc"
 
 			#include "Common.cginc"
-			sampler2D _Htilde;
+			sampler2D _Height;
+			float4 _Height_TexelSize;
+			sampler2D _Displace;
+			float4 _Displace_TexelSize;
 			int _Len;
             struct appdata
             {
@@ -39,18 +42,23 @@
                 o.uv = v.uv;
                 return o;
             }
+			float3 Sample(float2 uv)
+			{
+				float2 dxz = tex2D(_Displace, uv).xz;
+				float h = tex2D(_Height, uv).r;
+				return float3(dxz.x, h, dxz.y);
+			}
 
-            fixed4 frag (v2f i) : SV_Target
-            {
-				float2 htilde = tex2D(_Htilde, i.uv).xy;
-				float2 uv = i.uv * _Len;
-
-				float2 k = GetK(uv, _Len);
-				float kx = k.x;
-				float ky = k.y;
-				float2 nx = kx * iMultiply(-htilde);
-				float2 ny = ky * iMultiply(-htilde);
-				return float4(nx, ny);
+			float4 frag(v2f i) : SV_Target
+			{
+				float2 center = i.uv;
+				float2 up = i.uv + float2(0, -_Height_TexelSize.y);
+				float2 down = i.uv + float2(0, _Height_TexelSize.y);
+				float2 left = i.uv + float2(-_Height_TexelSize.x, 0);
+				float2 right = i.uv + float2(_Height_TexelSize.x, 0);
+				float3 x = float3(2, 0, 0) + Sample(right) - Sample(left);
+				float3 z = float3(0, 0, 2) + Sample(down) - Sample(up);
+				return float4(normalize(cross(z, x)), 1.0);
             }
             ENDCG
         }
