@@ -81,14 +81,19 @@ float random (vec2 st)
 ```
 原理大概是随着乘数变大，小数部分的粒度将正弦波的流动性破坏为伪随机的混沌<sup>[4]</sup>。具体的常量取值是魔值。<br>
 在GPU上计算得到的结果是经由RenderTexture传递的，几张主要的RenderTexture如下：<br>
-* 初始频谱，前两个通道存储复数 ![](/Formula/tildeh0.gif) 后两个通道则存储 ![](/Formula/tildeh0x.gif)
+* 某参数下的初始频谱，前两个通道存储复数 ![](/Formula/tildeh0.gif) 后两个通道则存储 ![](/Formula/tildeh0x.gif)
 ![](/Png/h0.png)<br><br>
-* 直接受时间变量影响，只使用一个通道存储 ![](/Formula/omegaKT.gif)
+* 某参数下的 ![](/Formula/omegaKT.gif) 值，直接受时间变量影响，只使用一个通道存储 
 ![](/Png/omegakt.png)<br><br>
-* 高度值，在渲染时用来进行凹凸映射(绘制这张图时振幅有点过大)，使用两个通道存储，实际使用时不会使用虚部值。
+* 某参数下的高度值，在渲染时用来进行凹凸映射(绘制这张图时振幅有点过大)，使用两个通道存储，实际使用时不会使用虚部值。
 ![](/Png/height.png)<br><br>
-* 水平扰动，使用四个通道存储两个方向上的移动。
+* 某参数下的水平扰动，使用四个通道存储两个方向上的移动。
 ![](/Png/displace.png)<br><br>
+* 某参数下的法线扰动，使用的并非是上述法线公式，而是使用微元法计算出曲面在x与z方向上的偏导方向后进行叉积得到。
+
+## 反思
+>* Unity中mesh顶点数目最大值似乎被限制在65000内，按项目中着色器对齐到顶点的采样方法似乎最多实现到128x128的mesh
+
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
 [2] [Ocean simulation part one: using the discrete Fourier transform](https://www.keithlantz.net/2011/10/ocean-simulation-part-one-using-the-discrete-fourier-transform/) <br>
