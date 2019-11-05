@@ -101,7 +101,9 @@ float random (vec2 st)
 
 其中由于本模型中水平方向偏移倍率为常数，且根据 ![](/Formula/VecD.gif) 定义，可以把行列式写成如下形式：<br><br>
 ![](/Formula/WhiteCapmyjaco.gif)<br><br>
-偏导数的解析解较为复杂，但是可以使用微元法，从纹理中采样获得数值解。<br>
+偏导数的解析解较为复杂，但是可以使用微元法，从纹理中采样获得数值解，渲染得到的WhiteCap纹理如下：<br>
+![](/Png/whitecap.png)<br><br>
+
 基于上述所有，套用Phong光照模型渲染的结果如下：<br><br>
 ![](/Gif/GPUFFT.gif)<br><br>
 
