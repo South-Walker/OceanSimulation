@@ -101,16 +101,12 @@ float random (vec2 st)
 
 其中由于本模型中水平方向偏移倍率为常数，且根据 ![](/Formula/VecD.gif) 定义，可以把行列式写成如下形式：<br><br>
 ![](/Formula/WhiteCapmyjaco.gif)<br><br>
-偏导数的解析解较为复杂，但是可以使用微元法，从纹理中采样获得数值解。
-套用Phong光照模型渲染的结果如下：<br><br>
+偏导数的解析解较为复杂，但是可以使用微元法，从纹理中采样获得数值解。<br>
+基于上述所有，套用Phong光照模型渲染的结果如下：<br><br>
 ![](/Gif/GPUFFT.gif)<br><br>
 
 ## TODO
 >* 重构
->* 白沫
-
-## 反思
->* Unity中mesh顶点数目最大值似乎被限制在65000内，按项目中着色器对齐到顶点的采样方法似乎最多实现到128x128的mesh
 
 ## 引用
 [1] [GPU Gems](https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch01.html) <br>
