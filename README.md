@@ -85,13 +85,23 @@ float random (vec2 st)
 ![](/Png/h0.png)<br><br>
 * 某参数下的 ![](/Formula/omegaKT.gif) 值，直接受时间变量影响，只使用一个通道存储 <br>
 ![](/Png/omegakt.png)<br><br>
-* 某参数下的高度值，在渲染时用来进行凹凸映射(绘制这张图时振幅有点过大)，使用两个通道存储，实际使用时不会使用虚部值。<br>
+* 某参数下的高度值，在渲染时用来进行凹凸映射，使用两个通道存储，实际使用时不会使用虚部值。<br>
 ![](/Png/height.png)<br><br>
 * 某参数下的水平扰动，使用四个通道存储两个方向上的移动。<br>
 ![](/Png/displace.png)<br><br>
 * 某参数下的法线扰动，使用的并非是上述法线公式，而是使用微元法计算出曲面在x与z方向上的偏导方向后进行叉积得到。<br>
 ![](/Png/normal.png)<br><br>
 
+除此之外，在现实中的海面往往会具有WhiteCap现象，这是由于扰动过于剧烈使得某些波浪破碎后发生的反射率骤变<sup>[6]</sup>。在渲染中考虑该效应可以增添真实感，对于满足如下特征的顶点变换<br><br>
+![](/Formula/WhiteCapq.gif)<br><br>
+计算是否生成WhiteCap的函数如下：<br><br>
+![](/Formula/WhiteCapb.gif)<br><br>
+![](/Formula/WhiteCapjaco.gif)<br><br>
+* 其中 ![](/Formula/epsilon.gif) 为阈值， ![](/Formula/Upsilon.gif) 是开关函数
+
+其中由于本模型中水平方向偏移倍率为常数，且根据 ![](/Formula/VecD.gif) 定义，可以把行列式写成如下形式：<br><br>
+![](/Formula/WhiteCapmyjaco.gif)<br><br>
+偏导数的解析解较为复杂，但是可以使用微元法，从纹理中采样获得数值解。
 套用Phong光照模型渲染的结果如下：<br><br>
 ![](/Gif/GPUFFT.gif)<br><br>
 
@@ -108,3 +118,5 @@ float random (vec2 st)
 [3] Tessendorf, Jerry. Simulating Ocean Water. In SIGGRAPH 2002 Course Notes #9 (Simulating Nature: Realistic and Interactive Techniques), ACM Press. <br>
 [4] [The Book of Shaders](https://thebookofshaders.com/)<br>
 [5] [Mistral-Water](https://github.com/AlphaMistral/Mistral-Water)<br>
+[6] Dupuy J, Bruneton E. Real-time animation and rendering of ocean whitecaps[C]//SIGGRAPH Asia 2012 Technical Briefs. ACM, 2012: 15.<br>
+[7] [whitecaps](https://github.com/jdupuy/whitecaps)<br>
