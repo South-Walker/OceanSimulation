@@ -8,14 +8,15 @@ public class OceanWithGPU : MonoBehaviour
     #region public
     public bool hasChanged = false;
     public float Speed = 1f;
-    //unity不允许mesh拥有超过65535个顶点
-    [Range(1, 10)] 
+    public int ImgScale = 10;
+    [Range(1, 8)] 
     public int EdgeScale;
     public float Q = 1f;
     [SerializeField]
     Vector2 Wind = new Vector2();
-    [Range(0f, 10f)]
+    [Range(0f, 0.001f)]
     public float A;
+    public float WhiteCapThreshold = 0.25f;
     public bool isForce = true;
     #region Shaders
     public Shader initialShader;
@@ -23,6 +24,7 @@ public class OceanWithGPU : MonoBehaviour
     public Shader htildeShader;
     public Shader displaceShader;
     public Shader normalShader;
+    public Shader whitecapShader;
     public Shader fftShader;
     #endregion
     #region Material
@@ -31,24 +33,26 @@ public class OceanWithGPU : MonoBehaviour
     private Material htildeMat;
     private Material displaceMat;
     private Material normalMat;
+    private Material whitecapMat;
     private Material fftMat;
+    public Material TargetMat;
     #endregion
 
     #endregion
     #region RenderTexture
     public RenderTexture initialTexture;
-    public RenderTexture omegaktTexture;
-    public RenderTexture htildeTexture;
-    public RenderTexture heightTexture;
-    public RenderTexture displaceTexture;
-    public RenderTexture normalTexture;
-
+    private RenderTexture omegaktTexture;
+    private RenderTexture htildeTexture;
+    private RenderTexture heightTexture;
+    private RenderTexture displaceTexture;
+    private RenderTexture whitecapTexture;
+    private RenderTexture normalTexture;
     private RenderTexture tempa;
     private RenderTexture tempb;
     #endregion
-    public Material testmat;
     #region private
     private int edgelen;
+    private int imglen;
     private float timer = 0f;
     private Vector3[] Vertices;
     private Vector2[] UVs;
@@ -75,16 +79,16 @@ public class OceanWithGPU : MonoBehaviour
             hasChanged = false;
         }
         omegaktMat.SetFloat("_Timer", timer);
-        omegaktMat.SetInt("_Len", edgelen);
+        omegaktMat.SetInt("_Len", imglen);
         
         Graphics.Blit(null, omegaktTexture, omegaktMat);
 
         htildeMat.SetTexture("_Init", initialTexture);
         htildeMat.SetTexture("_OmegaKT", omegaktTexture);
         Graphics.Blit(null, htildeTexture, htildeMat);
-        fftMat.SetFloat("_Len", edgelen);
+        fftMat.SetFloat("_Len", imglen);
         #region 渲染高度场
-        int iterations = EdgeScale * 2;
+        int iterations = ImgScale * 2;
         RenderTexture outputTexture = null, inputTexture = null;
         fftMat.EnableKeyword("_HORIZONTAL");
         fftMat.DisableKeyword("_VERTICAL");
@@ -114,7 +118,7 @@ public class OceanWithGPU : MonoBehaviour
         #region 渲染水平位移
         displaceMat.SetTexture("_Htilde", htildeTexture);
         displaceMat.SetFloat("_Q", Q);
-        displaceMat.SetInt("_Len", edgelen);
+        displaceMat.SetInt("_Len", imglen);
         Graphics.Blit(null, displaceTexture, displaceMat);
         fftMat.EnableKeyword("_HORIZONTAL");
         fftMat.DisableKeyword("_VERTICAL");
@@ -140,13 +144,18 @@ public class OceanWithGPU : MonoBehaviour
             Graphics.Blit(null, outputTexture, fftMat);
         }
         #endregion
-        normalMat.SetInt("_Len", edgelen);
+        normalMat.SetInt("_Len", imglen);
         normalMat.SetTexture("_Height", heightTexture);
         normalMat.SetTexture("_Displace", displaceTexture);
         Graphics.Blit(null, normalTexture, normalMat);
-        testmat.SetTexture("_Height", heightTexture);
-        testmat.SetTexture("_Displace", displaceTexture);
-        testmat.SetTexture("_Normal", normalTexture);
+        whitecapMat.SetTexture("_Displace", displaceTexture);
+        whitecapMat.SetFloat("_Q", Q);
+        whitecapMat.SetFloat("_Threshold", WhiteCapThreshold);
+        Graphics.Blit(null, whitecapTexture, whitecapMat);
+        TargetMat.SetTexture("_Height", heightTexture);
+        TargetMat.SetTexture("_Displace", displaceTexture);
+        TargetMat.SetTexture("_Normal", normalTexture);
+        TargetMat.SetTexture("_WhiteCap", whitecapTexture);
     }
     #region start
     private void SetVertices()
@@ -203,12 +212,13 @@ public class OceanWithGPU : MonoBehaviour
     private void InitRender()
     {
         initialMat.SetFloat("_A", A / 10000f);
-        initialMat.SetInt("_Len", edgelen);
+        initialMat.SetInt("_Len", imglen);
         initialMat.SetVector("_Wind", Wind);
         Graphics.Blit(null, initialTexture, initialMat);
     }
     private void SetParams()
     {
+        imglen = 1 << ImgScale;
         edgelen = 1 << EdgeScale;
 
         Vertices = new Vector3[edgelen * edgelen];
@@ -223,16 +233,18 @@ public class OceanWithGPU : MonoBehaviour
         htildeMat = new Material(htildeShader);
         displaceMat = new Material(displaceShader);
         normalMat = new Material(normalShader);
+        whitecapMat = new Material(whitecapShader);
         fftMat = new Material(fftShader);
 
-        initialTexture = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
-        omegaktTexture = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.RFloat);
-        htildeTexture = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
-        tempa = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
-        tempb = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
-        heightTexture = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
-        displaceTexture = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
-        normalTexture = new RenderTexture(edgelen, edgelen, 0, RenderTextureFormat.ARGBFloat);
+        initialTexture = new RenderTexture(imglen, imglen, 0, RenderTextureFormat.ARGBFloat);
+        omegaktTexture = new RenderTexture(imglen, imglen, 0, RenderTextureFormat.RFloat);
+        htildeTexture = new RenderTexture(imglen, imglen, 0, RenderTextureFormat.ARGBFloat);
+        tempa = new RenderTexture(imglen, imglen, 0, RenderTextureFormat.ARGBFloat);
+        tempb = new RenderTexture(imglen, imglen, 0, RenderTextureFormat.ARGBFloat);
+        heightTexture = new RenderTexture(imglen, imglen, 0, RenderTextureFormat.ARGBFloat);
+        displaceTexture = new RenderTexture(imglen, imglen, 0, RenderTextureFormat.ARGBFloat);
+        normalTexture = new RenderTexture(imglen, imglen, 0, RenderTextureFormat.ARGBFloat);
+        whitecapTexture = new RenderTexture(imglen, imglen, 0, RenderTextureFormat.ARGBFloat);
     }
     #endregion
 }

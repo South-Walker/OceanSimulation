@@ -1,0 +1,4 @@
+j(\vec{p},t)=\begin{vmatrix}
+1+\sum_i\lambda_i\frac{\partial \mu_i(\vec{p},t)}{\partial x}  &\sum_i\lambda_i\frac{\partial \mu_i(\vec{p},t)}{\partial y}   \\ \sum_i\lambda_i\frac{\partial \mu_i(\vec{p},t)}{\partial y}  
+ & 1+\sum_i\lambda_i\frac{\partial \nu _i(\vec{p},t)}{\partial y}
+\end{vmatrix}

@@ -1,9 +1,9 @@
-﻿Shader "Hidden/heighttest"
+﻿Shader "Hidden/PhoneAndWhiteCap"
 {
 	Properties
 	{
-		_Diffuse("Diffuse", Color) = (1, 1, 1, 1)
-		_Specular("Specular", Color) = (1, 1, 1, 1)
+		_Diffuse("Diffuse", Color) = (0, 1, 1, 1)
+		_Specular("Specular", Color) = (0.3, 0.3, 0.3, 1)
 		_Gloss("Gloss", Range(0, 256)) = 20
 	}
 		SubShader
@@ -27,6 +27,7 @@
 			sampler2D _Displace;
 			sampler2D _MainTex;
 			sampler2D _Normal;
+			sampler2D _WhiteCap;
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -75,8 +76,9 @@
 				fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
 				// Compute specular term
 				fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(reflectDir, viewDir)), _Gloss);
-
-				return fixed4(ambient + diffuse + specular, 1.0);
+				float whitecap = tex2D(_WhiteCap, i.uv).x;
+				float3 wc = float3(whitecap, whitecap, whitecap);
+				return fixed4(ambient + diffuse + specular + wc, 1.0);
             }
             ENDCG
         }

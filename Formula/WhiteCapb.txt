@@ -1,0 +1,1 @@
+b(\vec{p},t)=\Upsilon(\epsilon-j(\vec{p},t))

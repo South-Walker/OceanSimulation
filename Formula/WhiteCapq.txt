@@ -1,0 +1,1 @@
+\vec{q}(\vec{p},t)=\vec{p}+\sum_{i}\begin{vmatrix}\lambda_i\mu_i(\vec{p},t)\\\lambda_i\nu_i(\vec{p},t)\\\omega_i(\vec{p},t)\end{vmatrix}

@@ -1,0 +1,4 @@
+j(\vec{p},t)=\begin{vmatrix}
+1+\lambda\frac{\partial \vec{D}(\vec{p},t).x}{\partial x}  &\lambda\frac{\partial\vec{D}(\vec{p},t).y}{\partial y}   \\\lambda\frac{\partial\vec{D}(\vec{p},t).y}{\partial y}
+ & 1+\lambda\frac{\partial\vec{D}(\vec{p},t).y}{\partial y}
+\end{vmatrix}
